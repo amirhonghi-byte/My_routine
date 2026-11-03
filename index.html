@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c1422" />
+  <meta name="description" content="داشبورد مینیمال برنامه روزانه" />
+  <title>روال روزانه</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a111d;
+      --panel: #111d2d;
+      --panel-2: #152338;
+      --line: rgba(190, 211, 235, .10);
+      --text: #edf4fb;
+      --muted: #91a4b9;
+      --soft: #bdcada;
+      --accent: #71dfc1;
+      --accent-2: #9be9d4;
+      --accent-dark: #173f3a;
+      --gold: #e8c58a;
+      --blue: #8eb9fa;
+      --purple: #c0a6f2;
+      --radius: 20px;
+      --shadow: 0 18px 55px rgba(0,0,0,.24);
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 85% -12%, rgba(72, 135, 153, .19), transparent 42%),
+        radial-gradient(ellipse at -10% 35%, rgba(92, 106, 160, .10), transparent 38%),
+        var(--bg);
+      font-family: Vazirmatn, IRANSans, Tahoma, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button { font: inherit; }
+    .app { width: min(100% - 28px, 720px); margin: 0 auto; padding: 22px 0 calc(34px + env(safe-area-inset-bottom)); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:20px; }
+    .brand { display:flex; align-items:center; gap:11px; min-width:0; }
+    .brand-mark { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(145deg,#1e4d4c,#17313d); border:1px solid rgba(113,223,193,.22); color:var(--accent); box-shadow:0 8px 25px rgba(40,130,112,.13); }
+    .brand-mark svg { width:22px;height:22px; }
+    .brand-title { font-size:16px; font-weight:800; letter-spacing:-.3px; }
+    .brand-sub { color:var(--muted); font-size:11px; margin-top:1px; }
+    .date-pill { border:1px solid var(--line); background:rgba(255,255,255,.035); color:var(--soft); border-radius:999px; padding:7px 11px; white-space:nowrap; font-size:11px; }
+    .hero { position:relative; overflow:hidden; border:1px solid rgba(133,178,191,.15); background:linear-gradient(135deg,rgba(24,48,64,.98),rgba(17,29,45,.98) 70%); border-radius:26px; padding:20px; box-shadow:var(--shadow); }
+    .hero:after { content:""; position:absolute; width:190px;height:190px; border:1px solid rgba(113,223,193,.10); border-radius:50%; left:-68px; top:-100px; box-shadow:0 0 0 22px rgba(113,223,193,.025),0 0 0 48px rgba(113,223,193,.018); pointer-events:none; }
+    .hero-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; position:relative; z-index:1; }
+    .eyebrow { color:var(--accent); font-size:11px; font-weight:700; margin-bottom:5px; }
+    h1 { margin:0; font-size:24px; line-height:1.4; letter-spacing:-.7px; }
+    .hero-note { margin:7px 0 0; color:#a9bacb; font-size:12px; }
+    .clock { font-variant-numeric:tabular-nums; font-size:18px; font-weight:800; color:#dff8f0; direction:ltr; }
+    .date-line { color:var(--muted); font-size:10px; margin-top:0; text-align:left; }
+    .progress-wrap { display:flex; align-items:center; gap:15px; margin-top:21px; position:relative; z-index:1; }
+    .progress-ring { width:68px;height:68px; flex:0 0 68px; position:relative; }
+    .progress-ring svg { width:68px;height:68px; transform:rotate(-90deg); }
+    .progress-ring circle { fill:none; stroke-width:6; }
+    .ring-track { stroke:rgba(219,239,245,.12); }
+    .ring-value { stroke:var(--accent); stroke-linecap:round; stroke-dasharray:176; stroke-dashoffset:176; transition:stroke-dashoffset .35s ease; }
+    .ring-center { position:absolute; inset:0; display:grid; place-items:center; font-size:12px; font-weight:800; direction:ltr; }
+    .progress-info { flex:1; min-width:0; }
+    .progress-title { font-size:13px;font-weight:750; }
+    .progress-caption { color:var(--muted);font-size:11px;margin-top:2px; }
+    .bar { height:5px; border-radius:99px; background:rgba(219,239,245,.10); overflow:hidden; margin-top:10px; }
+    .bar > span { display:block;height:100%;width:0;background:linear-gradient(90deg,#4cbda3,#9be9d4);border-radius:99px;transition:width .3s ease; }
+    .filters { display:flex; gap:7px; overflow-x:auto; padding:1px 0 12px; scrollbar-width:none; position:sticky; top:0; z-index:5; background:linear-gradient(var(--bg) 75%,rgba(10,17,29,0)); }
+    .filters::-webkit-scrollbar { display:none; }
+    .filter { flex:0 0 auto; border:1px solid var(--line); background:#101b2a; color:var(--muted); padding:7px 13px; border-radius:999px; font-size:11px; cursor:pointer; transition:.2s; }
+    .filter.active { color:#09221e; border-color:transparent; background:var(--accent); font-weight:800; }
+    .section { margin:14px 0 19px; scroll-margin-top:60px; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 2px 9px; }
+    .section-title-wrap { display:flex;align-items:center;gap:9px; }
+    .section-icon { width:32px;height:32px;display:grid;place-items:center;border-radius:11px;background:rgba(142,185,250,.10);color:var(--blue); }
+    .section-icon svg { width:17px;height:17px; }
+    .section:nth-of-type(2) .section-icon { background:rgba(232,197,138,.10);color:var(--gold); }
+    .section:nth-of-type(3) .section-icon { background:rgba(192,166,242,.10);color:var(--purple); }
+    .section:nth-of-type(4) .section-icon { background:rgba(113,223,193,.10);color:var(--accent); }
+    .section-title { font-size:14px;font-weight:800; }
+    .section-range { font-size:10px;color:var(--muted);direction:ltr; }
+    .section-card { background:linear-gradient(160deg,rgba(20,34,53,.96),rgba(15,26,42,.98)); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+    .task { display:grid; grid-template-columns:34px minmax(0,1fr) auto; align-items:center; gap:10px; padding:12px 13px; border-bottom:1px solid var(--line); min-height:65px; transition:background .2s; }
+    .task:last-child { border-bottom:0; }
+    .task:has(.check:checked) { background:rgba(113,223,193,.035); }
+    .task.current { background:rgba(113,223,193,.075); box-shadow:inset -3px 0 0 var(--accent); }
+    .task-icon { width:33px;height:33px; display:grid;place-items:center; border-radius:11px; background:rgba(255,255,255,.045); color:#afc3d7; }
+    .task-icon svg { width:17px;height:17px; }
+    .task-main { min-width:0; }
+    .task-title { font-size:12px;font-weight:750; color:var(--text); }
+    .task-desc { color:var(--muted);font-size:10px;line-height:1.65;margin-top:2px; }
+    .task:has(.check:checked) .task-title { color:#9db3b5; text-decoration:line-through; text-decoration-color:rgba(113,223,193,.45); }
+    .task-meta { display:flex; flex-direction:column; align-items:flex-end; gap:5px; min-width:51px; }
+    .task-time { color:#c3d0de; font-size:10px;direction:ltr;white-space:nowrap;font-variant-numeric:tabular-nums; }
+    .task-duration { color:var(--muted);font-size:9px; }
+    .check { appearance:none; width:21px;height:21px; margin:0; border:1.5px solid #52677b;border-radius:7px; display:grid;place-items:center; cursor:pointer; background:rgba(255,255,255,.02); transition:.18s; }
+    .check:checked { background:var(--accent); border-color:var(--accent); }
+    .check:checked:after { content:""; width:9px;height:5px;border:2px solid #09221e;border-top:0;border-right:0;transform:rotate(-45deg);margin-top:-2px; }
+    .subgroup-label { display:flex;align-items:center;justify-content:space-between; padding:10px 13px 7px; color:var(--accent-2);font-size:10px;font-weight:800; background:rgba(113,223,193,.035); border-bottom:1px solid var(--line); }
+    .subgroup-label span:last-child { color:var(--muted);font-weight:500; }
+    .flex-note { margin:9px 1px 0; padding:10px 12px; background:rgba(232,197,138,.055); border:1px solid rgba(232,197,138,.13); border-radius:13px; color:#c9b997; font-size:10px; line-height:1.8; }
+    .flex-note strong { color:var(--gold); }
+    .footer { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:14px 2px 4px; color:var(--muted);font-size:10px; }
+    .reset { border:1px solid var(--line); background:rgba(255,255,255,.03);color:#b4c1cf;border-radius:10px;padding:7px 10px;font-size:10px;cursor:pointer; }
+    .reset:active,.filter:active { transform:scale(.98); }
+    .install { border:1px solid rgba(113,223,193,.24); background:rgba(113,223,193,.09);color:var(--accent-2);border-radius:10px;padding:7px 10px;font-size:10px;cursor:pointer; }
+    .toast { position:fixed; bottom:calc(18px + env(safe-area-inset-bottom)); left:50%; transform:translate(-50%,15px); background:#e7fff7;color:#12362f;border-radius:13px;padding:10px 15px;font-size:11px;font-weight:700;box-shadow:0 10px 35px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:20;white-space:nowrap;max-width:calc(100% - 32px); }
+    .toast.show { opacity:1;transform:translate(-50%,0); }
+    .hidden { display:none !important; }
+
+    /* Refined task hierarchy: main work is bold; supporting work stays calm. */
+    .task { grid-template-columns:42px minmax(0,1fr) auto 22px; gap:11px; padding:13px 14px; }
+    .task-icon { width:40px; height:40px; border-radius:13px; color:var(--icon-color, #9fc7dc); background:color-mix(in srgb, var(--icon-color, #9fc7dc) 17%, transparent); border:1px solid color-mix(in srgb, var(--icon-color, #9fc7dc) 24%, transparent); }
+    .task-icon svg { width:23px; height:23px; }
+    .task-main { display:flex; align-items:baseline; flex-wrap:wrap; column-gap:9px; row-gap:1px; min-width:0; }
+    .task-title { font-size:12px; font-weight:800; line-height:1.8; }
+    .task.parallel .task-title { font-weight:500; color:#d3deea; }
+    .task-desc { flex-basis:100%; margin-top:0; font-size:10px; }
+    .task-parallel { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:10px; font-weight:400; line-height:1.7; }
+    .task-parallel::before { content:""; display:inline-block; width:2px; height:16px; border-radius:3px; background:var(--parallel-color, var(--accent)); flex:0 0 2px; }
+    .task.parallel .task-title::before { content:""; display:inline-block; width:2px; height:14px; border-radius:3px; background:var(--parallel-color, var(--blue)); margin-left:8px; vertical-align:-2px; }
+    .task-meta { min-width:54px; }
+    .task-icon svg { overflow:visible; }
+    .section-icon { width:36px; height:36px; border-radius:12px; }
+    .section-icon svg { width:20px; height:20px; }
+    .filters { gap:9px; padding-top:5px; }
+    .filter { text-decoration:none; min-width:88px; text-align:center; }
+    .filter:focus-visible,.priority-toggle:focus-visible,.reset:focus-visible,.install:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+    .priority-toggle { display:inline-flex; align-items:center; gap:7px; margin-top:10px; border:1px solid rgba(232,197,138,.28); background:rgba(232,197,138,.09); color:#f0d5a5; border-radius:11px; padding:7px 10px; font-size:10px; font-weight:700; cursor:pointer; }
+    .priority-toggle svg { width:15px; height:15px; }
+    .priority-toggle[aria-pressed="true"] { background:rgba(113,223,193,.13); color:var(--accent-2); border-color:rgba(113,223,193,.35); }
+    .priority-hint { display:none; color:#b6c8d8; font-size:10px; line-height:1.7; margin:8px 0 0; }
+    body.priority-mode .priority-hint { display:block; }
+    body.priority-mode .task[data-priority="supporting"] { display:none !important; }
+    body.priority-mode .task-parallel { display:none !important; }
+    .day-complete .progress-title { color:var(--accent-2); }
+    .day-complete .ring-value { stroke:#f0cc82; }
+    .section { scroll-margin-top:75px; }
+    .subgroup-label { min-height:39px; }
+    .task-time:empty,.task-duration:empty { display:none; }
+    @media (max-width:370px) {
+      .task { grid-template-columns:36px minmax(0,1fr) auto 21px; gap:8px; padding:11px 10px; }
+      .task-icon { width:36px; height:36px; }
+      .task-icon svg { width:21px; height:21px; }
+      .task-title { font-size:11px; }
+      .task-parallel { font-size:9px; }
+      .task-time { font-size:9px; }
+    }
+
+    @media (min-width:600px) {
+      .app { padding-top:32px; }
+      .hero { padding:24px 26px; }
+      .task { padding:13px 16px; }
+      .task-title { font-size:13px; }
+      .task-desc { font-size:11px; }
+    }
+    @media (max-width:370px) {
+      .app { width:calc(100% - 20px); }
+      .hero { padding:17px; }
+      h1 { font-size:21px; }
+      .date-pill { font-size:10px;padding:6px 8px; }
+      .task { grid-template-columns:34px minmax(0,1fr) auto 21px;gap:8px;padding:11px 10px; }
+      .task-icon { width:30px;height:30px; }
+      .task-time { font-size:9px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*:before,*:after { scroll-behavior:auto !important;transition:none !important; } }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m-13 5h18m-11 0v2h4v-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><path d="M5 17V5.8A2.8 2.8 0 0 1 7.8 3h8.4A2.8 2.8 0 0 1 19 5.8V17M5 9h14M7 17v2m10-2v2M5 14h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="14" r="1" fill="currentColor"/><circle cx="16" cy="14" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Zm0 13A2.5 2.5 0 0 1 6.5 16H20M8 7h8m-8 3h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clean" viewBox="0 0 24 24"><path d="m14 3 7 7M4 20l9-9m-6 9H4v-3l9-9 3 3-9 9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 8.5h13v6.2a4.3 4.3 0 0 1-4.3 4.3H8.3A4.3 4.3 0 0 1 4 14.7Z" fill="#f3bd72" stroke="#d58b45" stroke-width="1.2"/><path d="M5.2 10h10.6v3.8H5.2Z" fill="#8b5135"/><path d="M17 10.3h1.5a2.1 2.1 0 0 1 0 4.2H17" fill="none" stroke="#eab16b" stroke-width="1.8" stroke-linecap="round"/><path d="M7.2 3.3c-1.1 1 .9 1.5 0 2.8m4-2.8c-1.1 1 .9 1.5 0 2.8" fill="none" stroke="#f3d8a5" stroke-width="1.6" stroke-linecap="round"/><path d="M7 20.3h8" stroke="#d58b45" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-language" viewBox="0 0 24 24"><path d="M4 5h12M10 3v2m5 0c-.8 5-4.2 8.5-9 10m1-6c1.5 2.3 3.5 4 6 5m-2 6 4-9 4 9m-6.5-2h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 1c5-4 9 4 14 0v10c-5 4-9-4-14 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-food" viewBox="0 0 24 24"><path d="M4 3v7m-2-7v4a2 2 0 0 0 4 0V3m-2 8v10m12-18v18m0-18c3 2 4 5 4 8h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 18V6m0 9h18v6m0-6V9a2 2 0 0 0-2-2h-5v8M3 11h5a3 3 0 0 1 3 3v1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 4a3 3 0 0 0-5.8 1A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2 6.3A3 3 0 0 0 12 19V4Zm0 0a3 3 0 0 1 5.8 1A3.5 3.5 0 0 1 20 11a3.5 3.5 0 0 1-2 6.3A3 3 0 0 1 12 19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 9v6m-3-4v2m18-2v2m-3-4v6M6 12h12M3 10v4m18-4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 24 24"><path d="M12 3v18m-4-14v10m8-10v10M3 9v6m18-6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.7-1.6 3-3.5 3S2 20.7 2 19s1.6-3 3.5-3S9 16.3 9 18Zm12-2c0 1.7-1.6 3-3.5 3S14 17.7 14 16s1.6-3 3.5-3 3.5 1.3 3.5 3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M3 5l1 1 2-2m-3 8 1 1 2-2m-3 8 1 1 2-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><svg><use href="#i-spark"/></svg></div>
+        <div><div class="brand-title">روال روزانه</div><div class="brand-sub">برنامه شخصی · شنبه تا چهارشنبه</div></div>
+      </div>
+      <div class="date-pill" id="datePill">امروز</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">قدم‌به‌قدم، هر روز</div>
+          <h1>برنامه امروزت</h1>
+          <p class="hero-note" id="dailyMessage">هر روز، یک قدم کوچک هم پیشرفت است.</p>
+        </div>
+        <div><div class="clock" id="liveClock">--:--</div><div class="date-line" id="fullDate"> </div></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-ring">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="28"/><circle class="ring-value" id="ringValue" cx="32" cy="32" r="28"/></svg>
+          <div class="ring-center" id="percent">۰٪</div>
+        </div>
+        <div class="progress-info">
+          <div class="progress-title" id="progressTitle">شروع روز</div>
+          <div class="progress-caption" id="progressCaption">۰ فعالیت از ۰ فعالیت انجام شده</div>
+          <div class="bar"><span id="progressBar"></span></div>
+          <button class="priority-toggle" id="priorityToggle" type="button" aria-pressed="false"><svg><use href="#i-spark"/></svg><span id="priorityToggleLabel">روز شلوغ · فقط کارهای مهم</span></button>
+          <p class="priority-hint">حالت روز شلوغ، فعالیت‌های پشتیبان را موقتاً پنهان می‌کند؛ تیک‌ها پاک نمی‌شوند. غذا، استراحت و خواب را حذف نکن.</p>
+        </div>
+      </div>
+    </section>
+
+    <nav class="filters" aria-label="رفتن به بخش‌های برنامه">
+      <a class="filter active" href="#morning">صبح</a>
+      <a class="filter" href="#evening">عصر و شب</a>
+    </nav>
+
+    <section class="section" id="morning" data-section="morning">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">صبح</div></div><div class="section-range">۰۶:۰۰ — ۱۷:۳۰</div></div>
+      <div class="section-card">
+        <div class="subgroup-label"><span>شروع روز</span><span>۰۶:۰۰ — ۰۹:۳۰</span></div>
+        <div id="morningTasks"></div>
+        <div class="subgroup-label"><span>کارآموزی · زمان آزاد شرکت</span><span>۲ ساعت و ۳۰ دقیقه</span></div>
+        <div id="workTasks"></div>
+        <div class="subgroup-label"><span>بازه استراحت شرکت</span><span>۴۵ دقیقه</span></div>
+        <div id="breakTasks"></div>
+      </div>
+      <div class="flex-note"><strong>مسیر رفت:</strong> یک ساعت مطالعه در مسیر در نظر گرفته شده؛ اگر امکان مطالعه نداشتی، می‌توانی از زمان جبرانی مسیر برگشت استفاده کنی.</div>
+      <div class="flex-note">در زمان آزاد شرکت، دو بلوک یک‌ساعته یادگیری مهارت اصلی را با ۱۵ دقیقه زبان و ۱۵ دقیقه تحقیقات سربازی و نخبگی انجام بده. ساعت دقیق فعالیت‌ها می‌تواند با شرایط شرکت جابه‌جا شود.</div>
+    </section>
+
+    <section class="section" id="evening" data-section="evening">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">عصر و شب</div></div><div class="section-range">۱۷:۳۰ — ۰۶:۰۰</div></div>
+      <div class="section-card">
+        <div class="subgroup-label"><span>مسیر برگشت</span><span>۱۷:۳۰ — ۱۹:۰۰</span></div>
+        <div id="returnTasks"></div>
+        <div class="subgroup-label"><span>برنامه عصر و شب</span><span>۱۹:۰۰ — ۰۶:۰۰</span></div>
+        <div id="eveningTasks"></div>
+      </div>
+      <div class="flex-note"><strong>زمان جبرانی عمومی:</strong> به‌جز ۱۵ دقیقه تمرین افزایش سرعت یادگیری، باقی مسیر برگشت برای جبران هر فعالیت عقب‌افتاده است؛ نه فقط درس. اگر کاری عقب نمانده، می‌توانی استراحت کنی.</div>
+      <div class="flex-note"><strong>یادآوری:</strong> مهارت اضطراری فعلاً از برنامه حذف شده و بازه ۲۱:۱۰ تا ۲۲:۳۰ برای زمان آزاد و ریکاوری است.</div>
+    </section>
+
+    <footer class="footer">
+      <span>وضعیت فعالیت‌ها روی همین دستگاه ذخیره می‌شود.</span>
+      <button class="reset" id="resetBtn">پاک‌کردن تیک‌های امروز</button>
+    </footer>
+    <div class="footer" style="padding-top:0;justify-content:flex-start"><button class="install" id="installBtn">افزودن به صفحه اصلی</button></div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const groups = {
+      morning: [
+        {id:'m1', time:'۰۶:۰۰–۰۶:۴۵', title:'کارهای صبحگاهی و صبحانه', parallel:'کارهای موبایل هم‌زمان', desc:'', icon:'coffee', duration:'۴۵ دقیقه', start:'06:00', end:'06:45', priority:'core'},
+        {id:'m2', time:'۰۶:۴۵–۰۷:۴۵', title:'یادگیری مهارت اصلی', parallel:'۱۰ دقیقه نظافت', desc:'', icon:'book', duration:'۱ ساعت', start:'06:45', end:'07:45', priority:'core'},
+        {id:'m3', time:'۰۷:۴۵–۰۸:۰۰', title:'زمان آزاد', desc:'فرصت کوتاه برای آماده‌شدن و راه‌افتادن', icon:'clock', duration:'۱۵ دقیقه', start:'07:45', end:'08:00', priority:'supporting'},
+        {id:'m4', time:'۰۸:۰۰–۰۹:۳۰', title:'مسیر رفت + مطالعه', desc:'یک ساعت مطالعه در مسیر رفت؛ اگر شرایط مناسب نبود، از زمان جبرانی مسیر برگشت استفاده کن.', icon:'bus', duration:'۹۰ دقیقه', start:'08:00', end:'09:30', priority:'core'}
+      ],
+      work: [
+        {id:'w1', time:'', title:'یادگیری مهارت اصلی', desc:'بلوک اول', icon:'book', duration:'۶۰ دقیقه', kind:'main', priority:'core'},
+        {id:'w2', time:'', title:'زبان', desc:'مطالعه یا تمرین زبان', icon:'language', duration:'۱۵ دقیقه', kind:'parallel', priority:'supporting'},
+        {id:'w3', time:'', title:'یادگیری مهارت اصلی', desc:'بلوک دوم', icon:'book', duration:'۶۰ دقیقه', kind:'main', priority:'core'},
+        {id:'w4', time:'', title:'تحقیقات سربازی و نخبگی', desc:'پیگیری اطلاعات، قوانین و فرصت‌ها', icon:'flag', duration:'۱۵ دقیقه', kind:'parallel', priority:'supporting'}
+      ],
+      breaks: [
+        {id:'b1', time:'', title:'ناهار', desc:'وعده کامل ناهار', icon:'food', duration:'۱۵ دقیقه', priority:'core'},
+        {id:'b2', time:'', title:'چرت ظهر', desc:'زمان کوتاه برای خواب و بیدارشدن', icon:'bed', duration:'۱۵ دقیقه', priority:'core'},
+        {id:'b3', time:'', title:'تمرین هوش کلامی', desc:'تمرین کوتاه روزانه', icon:'brain', duration:'۱۵ دقیقه', kind:'parallel', priority:'supporting'}
+      ],
+      returning: [
+        {id:'r1', time:'در مسیر', title:'تمرین افزایش سرعت یادگیری', desc:'فعالیت ثابت مسیر برگشت', icon:'brain', duration:'۱۵ دقیقه', kind:'parallel', priority:'supporting'}
+      ],
+      evening: [
+        {id:'e1', time:'۱۹:۰۰–۱۹:۱۰', title:'استراحت و آماده‌شدن برای باشگاه', desc:'آماده‌شدن برای شروع تمرین', icon:'clock', duration:'۱۰ دقیقه', start:'19:00', end:'19:10', priority:'core'},
+        {id:'e2', time:'۱۹:۱۰–۲۰:۱۰', title:'بدنسازی', desc:'جلسه تمرین باشگاه', icon:'dumbbell', duration:'۱ ساعت', start:'19:10', end:'20:10', priority:'core'},
+        {id:'e3', time:'۲۰:۱۰–۲۰:۲۵', title:'شام', parallel:'کارهای موبایل هم‌زمان', desc:'', icon:'food', duration:'۱۵ دقیقه', start:'20:10', end:'20:25', priority:'core'},
+        {id:'e4', time:'۲۰:۲۵–۲۰:۳۰', title:'استراحت و آماده‌شدن', desc:'آماده‌سازی برای تمرین صدا', icon:'clock', duration:'۵ دقیقه', start:'20:25', end:'20:30', priority:'core'},
+        {id:'e5', time:'۲۰:۳۰–۲۰:۴۰', title:'تمرین صدای بم‌تر و رزونانس', desc:'ملایم و بدون فشار به حنجره', icon:'voice', duration:'۱۰ دقیقه', start:'20:30', end:'20:40', priority:'supporting'},
+        {id:'e6', time:'۲۰:۴۰–۲۱:۱۰', title:'یادگیری و تمرین آواز', desc:'۳۰ دقیقه تمرین آواز', icon:'music', duration:'۳۰ دقیقه', start:'20:40', end:'21:10', priority:'core'},
+        {id:'e7', time:'۲۱:۱۰–۲۲:۳۰', title:'زمان آزاد و ریکاوری', desc:'بدون فعالیت اجباری', icon:'spark', duration:'۱ ساعت و ۲۰ دقیقه', start:'21:10', end:'22:30', priority:'core'},
+        {id:'e8', time:'۲۲:۳۰–۰۶:۰۰', title:'خواب', desc:'۷ ساعت و ۳۰ دقیقه فرصت خواب', icon:'moon', duration:'۷ ساعت و ۳۰ دقیقه', start:'22:30', end:'06:00', priority:'core'}
+      ]
+    };
+
+    const icons = {
+      coffee:'i-coffee', book:'i-book', clock:'i-clock', bus:'i-bus', language:'i-language', flag:'i-flag', food:'i-food', bed:'i-bed', brain:'i-brain', dumbbell:'i-dumbbell', voice:'i-voice', music:'i-music', spark:'i-spark', moon:'i-moon'
+    };
+    const iconColors = {
+      coffee:'#f0b56c', book:'#8fb8ff', clock:'#a6b8ca', bus:'#f39a69', language:'#6bcbd0', flag:'#e9bd68',
+      food:'#f18c79', bed:'#b69af0', brain:'#bd9af2', dumbbell:'#eda16d', voice:'#70d6c4', music:'#e49ad3', spark:'#ebc66f', moon:'#9fb4ef'
+    };
+    const allTasks = [...groups.morning,...groups.work,...groups.breaks,...groups.returning,...groups.evening];
+    const dailyMessages = [
+      'پیشرفت واقعی از کارهای کوچک و پیوسته ساخته می‌شود.',
+      'لازم نیست سریع‌ترین باشی؛ فقط پیوستگی را حفظ کن.',
+      'امروز را با قدم بعدی بساز، نه با نگرانی درباره کل مسیر.',
+      'تمرکز روی کار مهم، بهتر از شلوغ‌کردن فهرست کارهاست.',
+      'هر روز فرصتی تازه برای بهترشدنِ کمی است.',
+      'ثبات از انگیزه مهم‌تر است؛ حتی یک قدم کوچک هم حساب می‌شود.',
+      'قرار نیست همه‌چیز کامل باشد؛ قرار است ادامه بدهی.',
+      'به جای منتظرماندن برای زمان ایده‌آل، از همین زمان استفاده کن.',
+      'هر فعالیتی که آگاهانه انجام می‌دهی، بخشی از مسیر توست.',
+      'روز خوب، روز بی‌نقص نیست؛ روزی است که دوباره به مسیر برمی‌گردی.',
+      'کارهای مهم را جلو ببر و برای بقیه، انعطاف داشته باش.',
+      'پیوستگی آرام، در بلندمدت از فشار مقطعی جلو می‌زند.',
+      'انرژی‌ات را برای چیزهایی نگه دار که واقعاً اهمیت دارند.',
+      'هر بار که حواست پرت شد، آرام برگرد به قدم بعدی.',
+      'امروز فقط روی چیزی تمرکز کن که در اختیار توست.',
+      'برنامه برای کمک به توست؛ نه برای اینکه اسیرش شوی.',
+      'استراحت بخشی از مسیر پیشرفت است، نه نقطه مقابل آن.',
+      'وقتی زمان کم است، اولویت‌ها را نگه دار و بقیه را رها کن.',
+      'با انجام یک کار مهم شروع کن؛ ادامه مسیر روشن‌تر می‌شود.',
+      'تداوم در روزهای معمولی، نتیجه‌های غیرمعمول می‌سازد.',
+      'قرار نیست هر روز رکورد بزنی؛ فقط ارتباطت را با هدف حفظ کن.',
+      'با خودت رقابت کن، اما به نیاز بدنت هم گوش بده.',
+      'یک روز دشوار، تمام مسیر را خراب نمی‌کند.',
+      'هر تیک کوچک، نشانه‌ای از تعهد به برنامه‌ای است که انتخاب کرده‌ای.'
+    ];
+
+    let activeDateKey = localDateKey();
+    let checks = loadChecks(activeDateKey);
+    let priorityMode = false;
+
+    function localDateKey(){
+      const d = new Date();
+      return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+    }
+    function storageKey(dateKey){ return 'daily-routine-checks-v2-' + dateKey; }
+    function loadChecks(dateKey){
+      try {
+        const current = localStorage.getItem(storageKey(dateKey));
+        if(current) return JSON.parse(current);
+        // Keep today's checks from the previous dashboard version, if present.
+        const previous = localStorage.getItem('daily-routine-checks-v1-' + dateKey);
+        if(previous){
+          localStorage.setItem(storageKey(dateKey), previous);
+          return JSON.parse(previous);
+        }
+        return {};
+      } catch(e) { return {}; }
+    }
+    function saveChecks(){
+      try { localStorage.setItem(storageKey(activeDateKey), JSON.stringify(checks)); }
+      catch(e) { showToast('ذخیره‌سازی در این مرورگر در دسترس نیست.'); }
+      updateProgress();
+    }
+    function taskHTML(task){
+      const checked = checks[task.id] ? 'checked' : '';
+      const iconId = icons[task.icon] || 'i-checklist';
+      const kind = task.kind === 'parallel' ? 'parallel' : 'main';
+      const parallelHTML = task.parallel ? `<span class="task-parallel">${task.parallel}</span>` : '';
+      const descHTML = task.desc ? `<span class="task-desc">${task.desc}</span>` : '';
+      const timeHTML = task.time ? `<span class="task-time">${task.time}</span>` : '<span class="task-time"></span>';
+      return `<label class="task ${kind}" data-task="${task.id}" data-priority="${task.priority || 'core'}" ${task.start ? `data-start="${task.start}" data-end="${task.end}"` : ''} style="--icon-color:${iconColors[task.icon] || '#9fc7dc'};--parallel-color:${iconColors[task.icon] || '#71dfc1'}">
+        <span class="task-icon"><svg><use href="#${iconId}"/></svg></span>
+        <span class="task-main"><span class="task-title">${task.title}</span>${parallelHTML}${descHTML}</span>
+        <span class="task-meta">${timeHTML}<span class="task-duration">${task.duration || ''}</span></span>
+        <input class="check" type="checkbox" aria-label="انجام شد: ${task.title}" data-id="${task.id}" ${checked}/>
+      </label>`;
+    }
+    function renderTasks(){
+      document.getElementById('morningTasks').innerHTML = groups.morning.map(taskHTML).join('');
+      document.getElementById('workTasks').innerHTML = groups.work.map(taskHTML).join('');
+      document.getElementById('breakTasks').innerHTML = groups.breaks.map(taskHTML).join('');
+      document.getElementById('returnTasks').innerHTML = groups.returning.map(taskHTML).join('');
+      document.getElementById('eveningTasks').innerHTML = groups.evening.map(taskHTML).join('');
+      document.querySelectorAll('.check').forEach(input => input.addEventListener('change', e => {
+        const wasDone = isComplete();
+        checks[e.target.dataset.id] = e.target.checked;
+        saveChecks();
+        if(!wasDone && isComplete()) showToast('عالی! همه فعالیت‌های برنامه امروز کامل شدند.');
+      }));
+      document.body.classList.toggle('priority-mode', priorityMode);
+      updateProgress();
+      markCurrentTask(new Date());
+    }
+    function isComplete(taskList=allTasks){ return taskList.every(t => !!checks[t.id]); }
+    function updateProgress(){
+      const relevantTasks = priorityMode ? allTasks.filter(t => t.priority !== 'supporting') : allTasks;
+      const done = relevantTasks.filter(t => checks[t.id]).length;
+      const total = relevantTasks.length;
+      const pct = total ? Math.round(done / total * 100) : 0;
+      document.getElementById('percent').textContent = toFa(pct) + '٪';
+      document.getElementById('progressCaption').textContent = priorityMode
+        ? `${toFa(done)} از ${toFa(total)} کار مهم انجام شده`
+        : `${toFa(done)} فعالیت از ${toFa(total)} فعالیت انجام شده`;
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('ringValue').style.strokeDashoffset = 176 - (176 * pct / 100);
+      const allDone = isComplete();
+      document.body.classList.toggle('day-complete', allDone && !priorityMode);
+      document.getElementById('progressTitle').textContent = allDone && !priorityMode
+        ? 'برنامه امروز کامل شد 🎉'
+        : (priorityMode ? (pct === 100 ? 'همه کارهای مهم انجام شدند' : 'حالت روز شلوغ فعال است') : (done === 0 ? 'شروع روز' : 'ادامه بده؛ خوب پیش می‌روی'));
+      if(allDone && !priorityMode) {
+        document.getElementById('progressCaption').textContent = 'فردا تیک‌ها خودکار از نو شروع می‌شوند.';
+      }
+    }
+    function toFa(value){ return String(value).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+    function updateDailyMessage(){
+      const d = new Date();
+      const dayNumber = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+      document.getElementById('dailyMessage').textContent = dailyMessages[((dayNumber % dailyMessages.length) + dailyMessages.length) % dailyMessages.length];
+    }
+    function updateClock(){
+      const d = new Date();
+      document.getElementById('liveClock').textContent = new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',hour12:false}).format(d);
+      document.getElementById('fullDate').textContent = new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',day:'numeric',month:'long'}).format(d);
+      document.getElementById('datePill').textContent = new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'short'}).format(d);
+      markCurrentTask(d);
+      checkForNewDay();
+    }
+    function markCurrentTask(now){
+      document.querySelectorAll('.task.current').forEach(el => el.classList.remove('current'));
+      const mins = now.getHours()*60 + now.getMinutes();
+      document.querySelectorAll('.task[data-start]').forEach(el => {
+        const [sh,sm] = el.dataset.start.split(':').map(Number);
+        const [eh,em] = el.dataset.end.split(':').map(Number);
+        const start = sh*60+sm, end = eh*60+em;
+        const active = end < start ? (mins >= start || mins < end) : (mins >= start && mins < end);
+        if(active) el.classList.add('current');
+      });
+    }
+    function checkForNewDay(){
+      const today = localDateKey();
+      if(today === activeDateKey) return;
+      activeDateKey = today;
+      checks = loadChecks(activeDateKey);
+      renderTasks();
+      updateDailyMessage();
+      showToast('روز تازه شروع شد؛ تیک‌های امروز از نو تنظیم شدند.');
+    }
+    function showToast(message){
+      const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show');
+      clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+    document.getElementById('priorityToggle').addEventListener('click', () => {
+      priorityMode = !priorityMode;
+      document.body.classList.toggle('priority-mode', priorityMode);
+      const btn = document.getElementById('priorityToggle');
+      btn.setAttribute('aria-pressed', String(priorityMode));
+      document.getElementById('priorityToggleLabel').textContent = priorityMode ? 'نمایش همه فعالیت‌ها' : 'روز شلوغ · فقط کارهای مهم';
+      updateProgress();
+      showToast(priorityMode ? 'فعالیت‌های پشتیبان پنهان شدند؛ تیک‌ها محفوظ‌اند.' : 'همه فعالیت‌ها دوباره نمایش داده شدند.');
+    });
+    document.querySelectorAll('.filters a').forEach(link => link.addEventListener('click', () => {
+      document.querySelectorAll('.filters a').forEach(a => a.classList.toggle('active', a === link));
+    }));
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if(!confirm('همه تیک‌های امروز پاک شوند؟')) return;
+      checks = {};
+      document.querySelectorAll('.check').forEach(input => input.checked = false);
+      saveChecks(); showToast('تیک‌های امروز پاک شدند.');
+    });
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); deferredPrompt = event; });
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      } else if(window.matchMedia('(display-mode: standalone)').matches){
+        showToast('برنامه روی صفحه اصلی نصب شده است.');
+      } else {
+        showToast('برای نصب وب‌اپ، نسخه پوشه‌ای باید روی یک نشانی HTTPS قرار بگیرد.');
+      }
+    });
+    if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+      window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+    }
+    renderTasks(); updateDailyMessage(); updateClock(); setInterval(updateClock, 30000);
+  </script>
+</body>
+</html>

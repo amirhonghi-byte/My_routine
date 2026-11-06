@@ -1,4 +1,4 @@
-
+ 
 
 
 <!doctype html>
@@ -184,6 +184,12 @@
     .task-actions{display:flex;gap:5px;align-items:center;grid-column:2 / -1;justify-content:flex-start;margin-top:-3px}
     .edit-task-btn{padding:4px 8px;font-size:9px;background:rgba(255,255,255,.035)}
     .task{position:relative}
+    .drag-handle{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid rgba(157,181,205,.18);border-radius:9px;background:rgba(255,255,255,.035);color:#9fb3c8;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+    .drag-handle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+    .drag-handle:active{cursor:grabbing;background:rgba(113,223,193,.12);color:var(--accent-2)}
+    .task.dragging{opacity:.42;outline:1px dashed var(--accent);outline-offset:-3px}
+    .task.drop-before{box-shadow:inset 0 3px 0 var(--accent)}
+    .task.drop-after{box-shadow:inset 0 -3px 0 var(--accent)}
     .empty-group{padding:12px;color:var(--muted);font-size:10px;text-align:center}
     .editor-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:50;display:none;align-items:center;justify-content:center;padding:14px}
     .editor-backdrop.open{display:flex}
@@ -464,6 +470,24 @@ function loadSchedules(){
    const rawText=localStorage.getItem(key);if(!rawText)continue;
    let raw;try{raw=JSON.parse(rawText)}catch(e){storageBlocked=true;console.error('Routine data JSON is unreadable:',key,e);continue}
    let source=raw?.days||raw?.schedules||raw?.schedule||raw?.data||raw;
+   // Support both day-keyed objects and the array-of-day-records format.
+   // Some earlier saved builds stored days as [{day:'شنبه', ...groups}] instead of { 'شنبه': {...} }.
+   if(Array.isArray(source)){
+     const result={};
+     const normalizeDayName=value=>String(value||'').replace(/[\u200c\u200f\u200e\s]/g,'');
+     const records=new Map(source.map(item=>[normalizeDayName(item?.day||item?.name||item?.title),item]));
+     let recognized=0;
+     DAYS.forEach(([day])=>{
+       const record=records.get(normalizeDayName(day));
+       const schedule=record?.groups||record?.schedule||record?.tasks||record;
+       if(hasScheduleShape(schedule)){result[day]=normalizeSchedule(schedule);recognized++;}
+       else result[day]=freshSchedule();
+     });
+     if(recognized>0){
+       if(key!==STORAGE_SCHEDULE)backupRaw(key,rawText);
+       return result;
+     }
+   }
    if(source&&typeof source==='object'&&DAYS.some(([n])=>hasScheduleShape(source[n]))){
      const result={};DAYS.forEach(([n])=>result[n]=hasScheduleShape(source[n])?normalizeSchedule(source[n]):freshSchedule());
      if(key!==STORAGE_SCHEDULE)backupRaw(key,rawText);
@@ -489,6 +513,19 @@ function localDateKey(){const d=new Date();return [d.getFullYear(),String(d.getM
 function storageKey(k){return 'daily-routine-checks-v2-'+k}
 function loadChecks(k){try{const a=localStorage.getItem(storageKey(k));if(a)return JSON.parse(a);const b=localStorage.getItem('daily-routine-checks-v1-'+k);if(b){localStorage.setItem(storageKey(k),b);return JSON.parse(b)}return {}}catch(e){return {}}}
 function saveChecks(){try{localStorage.setItem(storageKey(activeDateKey),JSON.stringify(checks))}catch(e){showToast('ذخیره‌سازی تیک‌ها ناموفق بود.')}updateProgress()}
+function sortTaskListByStart(tasks){
+  // مرتب‌سازی پایدار: ساعت‌دارها از زود به دیر؛ بدون ساعت‌ها در انتها.
+  return tasks.map((task,index)=>({task,index,minutes:/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(task.start||'')?Number(task.start.slice(0,2))*60+Number(task.start.slice(3,5)):Infinity}))
+    .sort((a,b)=>a.minutes-b.minutes||a.index-b.index)
+    .map(item=>item.task);
+}
+function sortAllSchedules(){
+  for(const day of Object.keys(schedules||{})){
+    for(const group of Object.keys(groupNames)){
+      if(Array.isArray(schedules[day]?.[group])) schedules[day][group]=sortTaskListByStart(schedules[day][group]);
+    }
+  }
+}
 function saveSchedules(){if(storageBlocked){showToast('ذخیره متوقف شد؛ دادهٔ ناشناخته‌ای پیدا شده و برای جلوگیری از بازنویسی، باید پشتیبان بررسی شود.');return false}try{const previous=localStorage.getItem(STORAGE_SCHEDULE);if(previous)backupRaw(STORAGE_SCHEDULE,previous);localStorage.setItem(STORAGE_SCHEDULE,JSON.stringify({schema:3,days:schedules}));return true}catch(e){showToast('ذخیره برنامه ناموفق بود؛ فضای ذخیره‌سازی را بررسی کن.');return false}}
 function loadBusyPlans(){try{return JSON.parse(localStorage.getItem('routine-busy-plans-v1')||'{}')}catch(e){return {}}}
 function saveBusyPlans(){try{localStorage.setItem('routine-busy-plans-v1',JSON.stringify(busyPlans))}catch(e){showToast('ذخیره فهرست روز شلوغ ناموفق بود.')}}
@@ -497,12 +534,21 @@ function fmtDuration(n){if(n%60===0)return fa(n/60)+' ساعت';if(n>60)return f
 function addMinutes(time,mins){if(!time)return '';let [h,m]=time.split(':').map(Number),v=(h*60+m+mins)%1440;return String(Math.floor(v/60)).padStart(2,'0')+':'+String(v%60).padStart(2,'0')}
 function timeLabel(t){return t.start&&Number.isFinite(Number(t.minutes))?fa(t.start)+'–'+fa(addMinutes(t.start,t.minutes)):t.time||''}
 function colorFor(icon){return iconColor(icon)}
-function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${fmtDuration(t.minutes||0)}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button></span></div>`}
+function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${fmtDuration(t.minutes||0)}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button><button type="button" class="drag-handle" aria-label="نگه دار و برای جابه‌جایی بکش" title="برای جابه‌جایی نگه دار و بکش"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h.01M11 3h.01M5 8h.01M11 8h.01M5 13h.01M11 13h.01" stroke-width="3"/></svg></button></span></div>`}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 const targetIds={morning:'morningTasks',work:'workTasks',breaks:'breakTasks',returning:'returnTasks',evening:'eveningTasks'};
 function renderDays(){const el=document.getElementById('daySelector');el.innerHTML='';DAYS.forEach(([name])=>{const b=document.createElement('button');b.type='button';b.className='profile-btn'+(name===activeDay?' active':'');b.textContent=name;b.addEventListener('click',()=>switchDay(name));el.appendChild(b)})}
 function renderTasks(){groups=schedules[activeDay];allTasks=Object.values(groups).flat();for(const key of Object.keys(groupNames)){const el=document.getElementById(targetIds[key]),arr=groups[key]||[];el.innerHTML=arr.map(taskHTML).join('')+(arr.length?'':'<div class="empty-group">هنوز فعالیتی در این بخش ثبت نشده است.</div>')+`<button type="button" class="add-task-btn" data-add="${key}">＋ افزودن فعالیت به ${groupNames[key]}</button>`}
 document.querySelectorAll('.check').forEach(i=>i.addEventListener('change',e=>{checks[e.target.dataset.id]=e.target.checked;saveChecks()}));document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEditor(findTask(b.dataset.edit))));document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>openEditor(null,b.dataset.add)));document.body.classList.remove('priority-mode');updateProgress();markCurrentTask(new Date())}
+
+// جابه‌جایی دستی فعالیت‌ها: فقط درون همان بخش و با ذخیره ترتیب جدید.
+let dragState=null;
+function clearDragMarks(){document.querySelectorAll('.task.drop-before,.task.drop-after').forEach(el=>el.classList.remove('drop-before','drop-after'))}
+document.addEventListener('pointerdown',e=>{const handle=e.target.closest('.drag-handle');if(!handle||e.button!==0)return;const taskEl=handle.closest('.task'),container=taskEl?.parentElement;if(!taskEl||!container)return;e.preventDefault();dragState={id:taskEl.dataset.task,taskEl,container,pointerId:e.pointerId,moved:false};taskEl.classList.add('dragging')});
+document.addEventListener('pointermove',e=>{if(!dragState||e.pointerId!==dragState.pointerId)return;const target=document.elementsFromPoint(e.clientX,e.clientY).map(node=>node.closest?.('.task')).find(item=>item&&item!==dragState.taskEl&&item.parentElement===dragState.container);if(!target){clearDragMarks();return}dragState.moved=true;clearDragMarks();const r=target.getBoundingClientRect(),after=e.clientY>r.top+r.height/2;target.classList.add(after?'drop-after':'drop-before');if(after)target.after(dragState.taskEl);else target.before(dragState.taskEl)});
+function finishTaskDrag(cancel=false){if(!dragState)return;const state=dragState;dragState=null;state.taskEl.classList.remove('dragging');clearDragMarks();if(cancel||!state.moved){return}const group=Object.keys(targetIds).find(key=>document.getElementById(targetIds[key])===state.container);if(!group)return;const ids=[...state.container.querySelectorAll('.task')].map(el=>el.dataset.task);const byId=new Map(schedules[activeDay][group].map(task=>[task.id,task]));const reordered=ids.map(id=>byId.get(id)).filter(Boolean);if(reordered.length!==schedules[activeDay][group].length){renderTasks();showToast('جابه‌جایی انجام نشد؛ فهرست دوباره بارگذاری شد.');return}const previous=schedules[activeDay][group];schedules[activeDay][group]=reordered;if(saveSchedules()){renderTasks();showToast('ترتیب فعالیت‌ها ذخیره شد.')}else{schedules[activeDay][group]=previous;renderTasks()}}
+document.addEventListener('pointerup',e=>{if(dragState&&e.pointerId===dragState.pointerId)finishTaskDrag(false)});
+document.addEventListener('pointercancel',e=>{if(dragState&&e.pointerId===dragState.pointerId)finishTaskDrag(true)});
 function findTask(id){for(const [g,a] of Object.entries(groups)){const t=a.find(x=>x.id===id);if(t)return {...t,_group:g}}return null}
 function updateProgress(){const relevant=busyMode?(busyPlans[activeDay]||[]):allTasks;const done=relevant.filter(t=>busyMode?!!t.done:!!checks[t.id]).length,total=relevant.length,pct=total?Math.round(done/total*100):0;document.getElementById('percent').textContent=fa(pct)+'٪';document.getElementById('progressCaption').textContent=total?`${fa(done)} از ${fa(total)} فعالیت انجام شده`:'برای این روز هنوز فعالیتی تعریف نشده است';document.getElementById('progressBar').style.width=pct+'%';document.getElementById('ringValue').style.strokeDashoffset=176-176*pct/100;document.getElementById('progressTitle').textContent=total?(done===total?'فهرست امروز کامل شد 🎉':busyMode?'فهرست روز شلوغ فعال است':done?'ادامه بده؛ خوب پیش می‌روی':'شروع روز'):'برنامه‌ات را بساز'}
 function switchDay(name){activeDay=name;busyMode=false;renderDays();renderTasks();showNormalView();document.getElementById('profileHint').textContent='برنامه مستقل '+name;}
@@ -521,7 +567,7 @@ function openEditor(task,group){editingId=task?.id||null;document.getElementById
 function closeEditor(){document.getElementById('editorBackdrop').classList.remove('open')}
 function renderSelectedIcon(){const el=document.getElementById('selectedIcon');el.innerHTML=iconSvg(selectedIcon);el.style.color=iconColor(selectedIcon);document.getElementById('selectedIconName').textContent=iconName(selectedIcon)}
 function renderIconGrid(){const q=document.getElementById('iconSearch').value.trim().toLowerCase(),grid=document.getElementById('iconGrid');grid.innerHTML='';iconLibrary.filter(x=>!q||x.label.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)).forEach(item=>{const b=document.createElement('button');b.type='button';b.className='icon-choice'+(item.id===selectedIcon?' selected':'');b.style.setProperty('--choice-color',item.color);b.innerHTML=iconSvg(item.id)+`<span>${escapeHTML(item.label)}</span>`;b.title=item.label;b.addEventListener('click',()=>{selectedIcon=item.id;renderSelectedIcon();renderIconGrid()});grid.appendChild(b)});if(!grid.children.length)grid.textContent='آیکونی پیدا نشد.'}
-document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('taskName').value.trim(),minutes=Number(document.getElementById('taskDuration').value);if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){showToast('نام و مدت فعالیت را درست وارد کن.');return}const group=document.getElementById('taskGroup').value;let task=editingId?findTask(editingId):null;if(editingId){const old=task._group;schedules[activeDay][old]=schedules[activeDay][old].filter(x=>x.id!==editingId)}else task={id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};Object.assign(task,{title,minutes,start:document.getElementById('taskStart').value||'',end:'',time:'',duration:fmtDuration(minutes),icon:selectedIcon,priority:document.getElementById('taskPriority').value,kind:document.getElementById('taskKind').value,parallel:document.getElementById('taskParallel').value.trim(),desc:document.getElementById('taskDesc').value.trim()});schedules[activeDay][group].push(task);if(saveSchedules()){closeEditor();renderTasks();showToast('فعالیت ذخیره شد.')}});
+document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('taskName').value.trim(),minutes=Number(document.getElementById('taskDuration').value);if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){showToast('نام و مدت فعالیت را درست وارد کن.');return}const group=document.getElementById('taskGroup').value;let task=editingId?findTask(editingId):null,oldGroup=null,oldIndex=-1;if(editingId){oldGroup=task._group;oldIndex=schedules[activeDay][oldGroup].findIndex(x=>x.id===editingId);schedules[activeDay][oldGroup].splice(oldIndex,1)}else task={id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};Object.assign(task,{title,minutes,start:document.getElementById('taskStart').value||'',end:'',time:'',duration:fmtDuration(minutes),icon:selectedIcon,priority:document.getElementById('taskPriority').value,kind:document.getElementById('taskKind').value,parallel:document.getElementById('taskParallel').value.trim(),desc:document.getElementById('taskDesc').value.trim()});if(editingId&&oldGroup===group&&oldIndex>=0)schedules[activeDay][group].splice(Math.min(oldIndex,schedules[activeDay][group].length),0,task);else schedules[activeDay][group].push(task);if(saveSchedules()){closeEditor();renderTasks();showToast('فعالیت ذخیره شد.')}});
 document.getElementById('deleteTask').addEventListener('click',()=>{if(!editingId||!confirm('این فعالیت از برنامه این روز حذف شود؟'))return;const t=findTask(editingId);schedules[activeDay][t._group]=schedules[activeDay][t._group].filter(x=>x.id!==editingId);saveSchedules();closeEditor();renderTasks();showToast('فعالیت حذف شد.')});
 document.getElementById('cancelTask').addEventListener('click',closeEditor);document.getElementById('editorBackdrop').addEventListener('click',e=>{if(e.target.id==='editorBackdrop')closeEditor()});document.getElementById('iconSearch').addEventListener('input',renderIconGrid);
 document.getElementById('addFirstTask').addEventListener('click',()=>openEditor(null,'morning'));

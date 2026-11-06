@@ -1,4 +1,4 @@
-const CACHE_NAME = 'routine-daily-v11';
+const CACHE_NAME = 'routine-daily-v16';
 
 const CORE_FILES = [
   './',

@@ -1,25 +1,358 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0a111d"><link rel="manifest" href="./manifest.webmanifest"><title>روتین من</title>
-<style>
-:root{color-scheme:dark;--bg:#0a111d;--panel:#111d2d;--panel2:#17263a;--line:#2a3b50;--text:#edf4fb;--muted:#91a4b9;--mint:#71dfc1;--gold:#e8c58a}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -12%,#25465a66,transparent 42%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.7}.app{width:min(720px,calc(100% - 26px));margin:auto;padding:22px 0 45px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.brand{font-size:18px;font-weight:900}.muted{color:var(--muted);font-size:11px}.clock{font-size:18px;color:var(--mint);direction:ltr}
-.hero,.card{background:linear-gradient(145deg,#182c42,#101c2d);border:1px solid var(--line);border-radius:20px;padding:17px;margin-bottom:13px}.hero h1{font-size:20px;margin:0}.hero p{font-size:11px;color:var(--muted);margin:5px 0 13px}.progress{display:flex;align-items:center;gap:13px}.ring{width:66px;height:66px;border-radius:50%;background:conic-gradient(var(--mint) var(--pct,0%),#2a3b50 0);display:grid;place-items:center;position:relative;flex:none}.ring:before{content:"";position:absolute;inset:6px;border-radius:50%;background:#17283c}.ring b{position:relative}.bar{height:5px;background:#2a3b50;border-radius:9px;margin-top:8px;overflow:hidden}.bar span{display:block;height:100%;background:var(--mint);width:0}
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:13px 0}.day{border:1px solid var(--line);background:#111d2d;color:var(--muted);border-radius:11px;padding:9px 0;font-size:11px}.day.active{background:var(--mint);color:#09231e;border-color:var(--mint);font-weight:bold}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.btn{border:1px solid var(--line);border-radius:11px;background:#182a40;color:var(--text);padding:9px 12px;font-size:11px}.btn.primary{background:var(--mint);border-color:var(--mint);color:#09231e;font-weight:bold}.btn.danger{color:#ffaaaa}
-.section{margin:14px 0}.section-head{font-size:13px;color:#c6d7e8;font-weight:bold;margin:0 3px 8px}.section-card{border:1px solid var(--line);border-radius:15px;background:#111e30;overflow:hidden}.task{display:grid;grid-template-columns:38px 1fr auto 22px;align-items:center;gap:10px;padding:11px;border-bottom:1px solid #29394d}.task:last-child{border:0}.task.done .task-title{text-decoration:line-through;color:#8ca3a7}.task-icon{width:32px;height:32px;display:grid;place-items:center}.task-icon svg{width:26px;height:26px;fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.task-title{font-size:12px;font-weight:bold}.task-meta{font-size:10px;color:var(--muted)}.task input[type=checkbox],.busy-row input[type=checkbox]{accent-color:var(--mint);width:18px;height:18px}.edit{background:none;border:0;color:#a9bfd4;font-size:14px;padding:3px}.empty{padding:13px;text-align:center;color:var(--muted);font-size:11px}.add{width:100%;border:1px dashed #486078;background:#14243a;color:var(--mint);padding:9px;border-radius:10px;font-size:11px;margin-top:8px}
-.busy-head{padding:14px 14px 5px}.busy-head b{font-size:14px}.busy-head p{font-size:10px;color:var(--muted);margin:3px 0 8px}.busy-row{display:grid;grid-template-columns:20px minmax(0,1fr) 82px 20px;gap:8px;align-items:center;padding:10px 13px;border-bottom:1px solid var(--line);font-size:11px}.busy-row input[type=number]{width:95px;background:#0a1524;border:1px solid var(--line);border-radius:8px;color:white;padding:7px}.busy-row input:disabled{opacity:.35}.total{color:var(--mint);font-weight:bold;text-align:left;padding:13px}
-.modal-bg{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:13px}.modal-bg.open{display:flex}.modal{width:min(520px,100%);max-height:92vh;overflow:auto;background:#122137;border:1px solid var(--line);border-radius:18px;padding:16px}.modal h2{font-size:15px;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid label{font-size:10px;color:var(--muted);display:grid;gap:5px}.grid .full{grid-column:1/-1}input,select,textarea{min-width:0;width:100%;background:#091625;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px;font:inherit}.icons{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;max-height:160px;overflow:auto;margin:9px 0}.icon-choice{background:#0a1728;border:1px solid var(--line);border-radius:8px;padding:6px;font-size:19px}.icon-choice.selected{border-color:var(--mint);background:#1a3c3a}.modal-actions{display:flex;gap:8px;margin-top:12px}.copydays{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.copydays label{font-size:11px;display:flex;align-items:center;gap:5px}.copydays input{width:auto}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#e7fff7;color:#12362f;border-radius:11px;padding:9px 14px;font-size:11px;opacity:0;transition:.2s;pointer-events:none}.toast.show{opacity:1}
-@media(max-width:390px){.days{gap:3px}.day{font-size:10px}.task{grid-template-columns:30px 1fr auto 20px;gap:6px;padding:9px}.grid{grid-template-columns:1fr}.grid .full{grid-column:auto}.icons{grid-template-columns:repeat(7,1fr)}}
-</style></head><body><main class="app">
-<div class="top"><div><div class="brand">روتین من</div><div class="muted" id="dateLabel">برنامه روزانه</div></div><div class="clock" id="clock">--:--</div></div>
-<section class="hero"><h1 id="heading">برنامه امروز</h1><p>هر روز برنامه مستقل خودش را دارد.</p><div class="progress"><div class="ring" id="ring"><b id="percent">۰٪</b></div><div style="flex:1"><b id="progressTitle" style="font-size:12px">شروع روز</b><div class="muted" id="progressCaption">۰ از ۰ فعالیت</div><div class="bar"><span id="bar"></span></div></div></div></section>
-<nav class="days" id="days"></nav><div class="actions"><button class="btn primary" id="addBtn">＋ افزودن فعالیت</button><button class="btn" id="copyBtn">کپی برنامه به روزها</button><button class="btn" id="busyBtn">حالت روز شلوغ</button></div>
-<div id="normalPanel"></div><section class="card" id="busyPanel" style="display:none;padding:0"><div class="busy-head"><b>فهرست روز شلوغ</b><p>فعالیت‌ها را انتخاب کن و فقط مدت موردنیاز را وارد کن. ترتیب و ساعت اجرا کاملاً با خودت است.</p></div><div id="busyRows"></div><div class="total" id="busyTotal">مجموع: ۰ دقیقه</div><div style="padding:0 13px 13px"><button class="btn primary" id="exitBusy">بازگشت به برنامه اصلی</button></div></section>
-<div class="muted" style="text-align:center;margin-top:18px">اطلاعات برنامه روی همین دستگاه ذخیره می‌شود.</div></main>
-<div class="modal-bg" id="editorBg"><form class="modal" id="taskForm"><h2 id="editorTitle">افزودن فعالیت</h2><div class="grid"><label class="full">نام فعالیت<input id="taskName" maxlength="80" required></label><label>بخش<select id="taskGroup"><option value="morning">شروع روز</option><option value="work">زمان آزاد شرکت</option><option value="breaks">استراحت شرکت</option><option value="returning">مسیر برگشت</option><option value="evening">عصر و شب</option></select></label><label>مدت (دقیقه)<input id="taskDuration" type="number" min="1" max="1440" required></label><label>ساعت شروع<input id="taskStart" type="time"></label><label>توضیحات<input id="taskDesc" maxlength="150"></label></div><div class="muted" style="margin-top:10px">مخزن آیکون‌ها</div><div class="icons" id="iconGrid"></div><div class="modal-actions"><button type="button" class="btn" id="cancelTask">انصراف</button><button type="button" class="btn danger" id="deleteTask">حذف</button><button class="btn primary">ذخیره</button></div></form></div>
-<div class="modal-bg" id="copyBg"><div class="modal"><h2>کپی برنامه این روز</h2><div class="muted">روزهای مقصد را انتخاب کن. هر روز یک نسخه مستقل می‌گیرد؛ تغییرات بعدی روی روزهای دیگر اثر ندارد.</div><div class="copydays" id="copyDays"></div><div class="modal-actions"><button class="btn" id="cancelCopy">انصراف</button><button class="btn primary" id="doCopy">کپی</button></div></div></div><div class="toast" id="toast"></div>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c1422" />
+  <meta name="description" content="داشبورد مینیمال برنامه روزانه" />
+  <title>روال روزانه</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a111d;
+      --panel: #111d2d;
+      --panel-2: #152338;
+      --line: rgba(190, 211, 235, .10);
+      --text: #edf4fb;
+      --muted: #91a4b9;
+      --soft: #bdcada;
+      --accent: #71dfc1;
+      --accent-2: #9be9d4;
+      --accent-dark: #173f3a;
+      --gold: #e8c58a;
+      --blue: #8eb9fa;
+      --purple: #c0a6f2;
+      --radius: 20px;
+      --shadow: 0 18px 55px rgba(0,0,0,.24);
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 85% -12%, rgba(72, 135, 153, .19), transparent 42%),
+        radial-gradient(ellipse at -10% 35%, rgba(92, 106, 160, .10), transparent 38%),
+        var(--bg);
+      font-family: Vazirmatn, IRANSans, Tahoma, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button { font: inherit; }
+    .app { width: min(100% - 28px, 720px); margin: 0 auto; padding: 22px 0 calc(34px + env(safe-area-inset-bottom)); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:20px; }
+    .brand { display:flex; align-items:center; gap:11px; min-width:0; }
+    .brand-mark { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(145deg,#1e4d4c,#17313d); border:1px solid rgba(113,223,193,.22); color:var(--accent); box-shadow:0 8px 25px rgba(40,130,112,.13); }
+    .brand-mark svg { width:22px;height:22px; }
+    .brand-title { font-size:16px; font-weight:800; letter-spacing:-.3px; }
+    .brand-sub { color:var(--muted); font-size:11px; margin-top:1px; }
+    .date-pill { border:1px solid var(--line); background:rgba(255,255,255,.035); color:var(--soft); border-radius:999px; padding:7px 11px; white-space:nowrap; font-size:11px; }
+    .hero { position:relative; overflow:hidden; border:1px solid rgba(133,178,191,.15); background:linear-gradient(135deg,rgba(24,48,64,.98),rgba(17,29,45,.98) 70%); border-radius:26px; padding:20px; box-shadow:var(--shadow); }
+    .hero:after { content:""; position:absolute; width:190px;height:190px; border:1px solid rgba(113,223,193,.10); border-radius:50%; left:-68px; top:-100px; box-shadow:0 0 0 22px rgba(113,223,193,.025),0 0 0 48px rgba(113,223,193,.018); pointer-events:none; }
+    .hero-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; position:relative; z-index:1; }
+    .eyebrow { color:var(--accent); font-size:11px; font-weight:700; margin-bottom:5px; }
+    h1 { margin:0; font-size:24px; line-height:1.4; letter-spacing:-.7px; }
+    .hero-note { margin:7px 0 0; color:#a9bacb; font-size:12px; }
+    .clock { font-variant-numeric:tabular-nums; font-size:18px; font-weight:800; color:#dff8f0; direction:ltr; }
+    .date-line { color:var(--muted); font-size:10px; margin-top:0; text-align:left; }
+    .progress-wrap { display:flex; align-items:center; gap:15px; margin-top:21px; position:relative; z-index:1; }
+    .progress-ring { width:68px;height:68px; flex:0 0 68px; position:relative; }
+    .progress-ring svg { width:68px;height:68px; transform:rotate(-90deg); }
+    .progress-ring circle { fill:none; stroke-width:6; }
+    .ring-track { stroke:rgba(219,239,245,.12); }
+    .ring-value { stroke:var(--accent); stroke-linecap:round; stroke-dasharray:176; stroke-dashoffset:176; transition:stroke-dashoffset .35s ease; }
+    .ring-center { position:absolute; inset:0; display:grid; place-items:center; font-size:12px; font-weight:800; direction:ltr; }
+    .progress-info { flex:1; min-width:0; }
+    .progress-title { font-size:13px;font-weight:750; }
+    .progress-caption { color:var(--muted);font-size:11px;margin-top:2px; }
+    .bar { height:5px; border-radius:99px; background:rgba(219,239,245,.10); overflow:hidden; margin-top:10px; }
+    .bar > span { display:block;height:100%;width:0;background:linear-gradient(90deg,#4cbda3,#9be9d4);border-radius:99px;transition:width .3s ease; }
+    .filters { display:flex; gap:7px; overflow-x:auto; padding:1px 0 12px; scrollbar-width:none; position:sticky; top:0; z-index:5; background:linear-gradient(var(--bg) 75%,rgba(10,17,29,0)); }
+    .filters::-webkit-scrollbar { display:none; }
+    .filter { flex:0 0 auto; border:1px solid var(--line); background:#101b2a; color:var(--muted); padding:7px 13px; border-radius:999px; font-size:11px; cursor:pointer; transition:.2s; }
+    .filter.active { color:#09221e; border-color:transparent; background:var(--accent); font-weight:800; }
+    .section { margin:14px 0 19px; scroll-margin-top:60px; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 2px 9px; }
+    .section-title-wrap { display:flex;align-items:center;gap:9px; }
+    .section-icon { width:32px;height:32px;display:grid;place-items:center;border-radius:11px;background:rgba(142,185,250,.10);color:var(--blue); }
+    .section-icon svg { width:17px;height:17px; }
+    .section:nth-of-type(2) .section-icon { background:rgba(232,197,138,.10);color:var(--gold); }
+    .section:nth-of-type(3) .section-icon { background:rgba(192,166,242,.10);color:var(--purple); }
+    .section:nth-of-type(4) .section-icon { background:rgba(113,223,193,.10);color:var(--accent); }
+    .section-title { font-size:14px;font-weight:800; }
+    .section-range { font-size:10px;color:var(--muted);direction:ltr; }
+    .section-card { background:linear-gradient(160deg,rgba(20,34,53,.96),rgba(15,26,42,.98)); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+    .task { display:grid; grid-template-columns:34px minmax(0,1fr) auto; align-items:center; gap:10px; padding:12px 13px; border-bottom:1px solid var(--line); min-height:65px; transition:background .2s; }
+    .task:last-child { border-bottom:0; }
+    .task:has(.check:checked) { background:rgba(113,223,193,.035); }
+    .task.current { background:rgba(113,223,193,.075); box-shadow:inset -3px 0 0 var(--accent); }
+    .task-icon { width:33px;height:33px; display:grid;place-items:center; border-radius:11px; background:rgba(255,255,255,.045); color:#afc3d7; }
+    .task-icon svg { width:17px;height:17px; }
+    .task-main { min-width:0; }
+    .task-title { font-size:12px;font-weight:750; color:var(--text); }
+    .task-desc { color:var(--muted);font-size:10px;line-height:1.65;margin-top:2px; }
+    .task:has(.check:checked) .task-title { color:#9db3b5; text-decoration:line-through; text-decoration-color:rgba(113,223,193,.45); }
+    .task-meta { display:flex; flex-direction:column; align-items:flex-end; gap:5px; min-width:51px; }
+    .task-time { color:#c3d0de; font-size:10px;direction:ltr;white-space:nowrap;font-variant-numeric:tabular-nums; }
+    .task-duration { color:var(--muted);font-size:9px; }
+    .check { appearance:none; width:21px;height:21px; margin:0; border:1.5px solid #52677b;border-radius:7px; display:grid;place-items:center; cursor:pointer; background:rgba(255,255,255,.02); transition:.18s; }
+    .check:checked { background:var(--accent); border-color:var(--accent); }
+    .check:checked:after { content:""; width:9px;height:5px;border:2px solid #09221e;border-top:0;border-right:0;transform:rotate(-45deg);margin-top:-2px; }
+    .subgroup-label { display:flex;align-items:center;justify-content:space-between; padding:10px 13px 7px; color:var(--accent-2);font-size:10px;font-weight:800; background:rgba(113,223,193,.035); border-bottom:1px solid var(--line); }
+    .subgroup-label span:last-child { color:var(--muted);font-weight:500; }
+    .flex-note { margin:9px 1px 0; padding:10px 12px; background:rgba(232,197,138,.055); border:1px solid rgba(232,197,138,.13); border-radius:13px; color:#c9b997; font-size:10px; line-height:1.8; }
+    .flex-note strong { color:var(--gold); }
+    .footer { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:14px 2px 4px; color:var(--muted);font-size:10px; }
+    .reset { border:1px solid var(--line); background:rgba(255,255,255,.03);color:#b4c1cf;border-radius:10px;padding:7px 10px;font-size:10px;cursor:pointer; }
+    .reset:active,.filter:active { transform:scale(.98); }
+    .install { border:1px solid rgba(113,223,193,.24); background:rgba(113,223,193,.09);color:var(--accent-2);border-radius:10px;padding:7px 10px;font-size:10px;cursor:pointer; }
+    .toast { position:fixed; bottom:calc(18px + env(safe-area-inset-bottom)); left:50%; transform:translate(-50%,15px); background:#e7fff7;color:#12362f;border-radius:13px;padding:10px 15px;font-size:11px;font-weight:700;box-shadow:0 10px 35px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:20;white-space:nowrap;max-width:calc(100% - 32px); }
+    .toast.show { opacity:1;transform:translate(-50%,0); }
+    .hidden { display:none !important; }
+
+    /* Refined task hierarchy: main work is bold; supporting work stays calm. */
+    .task { grid-template-columns:42px minmax(0,1fr) auto 22px; gap:11px; padding:13px 14px; }
+    .task-icon { width:40px; height:40px; border-radius:13px; color:var(--icon-color, #9fc7dc); background:color-mix(in srgb, var(--icon-color, #9fc7dc) 17%, transparent); border:1px solid color-mix(in srgb, var(--icon-color, #9fc7dc) 24%, transparent); }
+    .task-icon svg { width:23px; height:23px; }
+    .task-main { display:flex; align-items:baseline; flex-wrap:wrap; column-gap:9px; row-gap:1px; min-width:0; }
+    .task-title { font-size:12px; font-weight:800; line-height:1.8; }
+    .task.parallel .task-title { font-weight:500; color:#d3deea; }
+    .task-desc { flex-basis:100%; margin-top:0; font-size:10px; }
+    .task-parallel { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:10px; font-weight:400; line-height:1.7; }
+    .task-parallel::before { content:""; display:inline-block; width:2px; height:16px; border-radius:3px; background:var(--parallel-color, var(--accent)); flex:0 0 2px; }
+    .task.parallel .task-title::before { content:""; display:inline-block; width:2px; height:14px; border-radius:3px; background:var(--parallel-color, var(--blue)); margin-left:8px; vertical-align:-2px; }
+    .task-meta { min-width:54px; }
+    .task-icon svg { overflow:visible; }
+    .section-icon { width:36px; height:36px; border-radius:12px; }
+    .section-icon svg { width:20px; height:20px; }
+    .filters { gap:9px; padding-top:5px; }
+    .filter { text-decoration:none; min-width:88px; text-align:center; }
+    .filter:focus-visible,.priority-toggle:focus-visible,.reset:focus-visible,.install:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+    .priority-toggle { display:inline-flex; align-items:center; gap:7px; margin-top:10px; border:1px solid rgba(232,197,138,.28); background:rgba(232,197,138,.09); color:#f0d5a5; border-radius:11px; padding:7px 10px; font-size:10px; font-weight:700; cursor:pointer; }
+    .priority-toggle svg { width:15px; height:15px; }
+    .priority-toggle[aria-pressed="true"] { background:rgba(113,223,193,.13); color:var(--accent-2); border-color:rgba(113,223,193,.35); }
+    .priority-hint { display:none; color:#b6c8d8; font-size:10px; line-height:1.7; margin:8px 0 0; }
+    body.priority-mode .priority-hint { display:block; }
+    body.priority-mode .task[data-priority="supporting"] { display:none !important; }
+    body.priority-mode .task-parallel { display:none !important; }
+    .day-complete .progress-title { color:var(--accent-2); }
+    .day-complete .ring-value { stroke:#f0cc82; }
+    .section { scroll-margin-top:75px; }
+    .subgroup-label { min-height:39px; }
+    .task-time:empty,.task-duration:empty { display:none; }
+    @media (max-width:370px) {
+      .task { grid-template-columns:36px minmax(0,1fr) auto 21px; gap:8px; padding:11px 10px; }
+      .task-icon { width:36px; height:36px; }
+      .task-icon svg { width:21px; height:21px; }
+      .task-title { font-size:11px; }
+      .task-parallel { font-size:9px; }
+      .task-time { font-size:9px; }
+    }
+
+    @media (min-width:600px) {
+      .app { padding-top:32px; }
+      .hero { padding:24px 26px; }
+      .task { padding:13px 16px; }
+      .task-title { font-size:13px; }
+      .task-desc { font-size:11px; }
+    }
+    @media (max-width:370px) {
+      .app { width:calc(100% - 20px); }
+      .hero { padding:17px; }
+      h1 { font-size:21px; }
+      .date-pill { font-size:10px;padding:6px 8px; }
+      .task { grid-template-columns:34px minmax(0,1fr) auto 21px;gap:8px;padding:11px 10px; }
+      .task-icon { width:30px;height:30px; }
+      .task-time { font-size:9px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*:before,*:after { scroll-behavior:auto !important;transition:none !important; } }
+
+    .profile-switch{display:flex;gap:8px;margin:0 0 12px}
+    .profile-btn,.manage-btn,.add-task-btn,.edit-task-btn{border:1px solid var(--line);background:#122033;color:var(--soft);border-radius:12px;padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer}
+    .profile-btn{flex:1}.profile-btn.active{background:var(--accent);border-color:var(--accent);color:#09221e}
+    .manage-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 12px}
+    .manage-row small{color:var(--muted);font-size:10px}
+    .manage-btn{color:var(--accent-2);border-color:rgba(113,223,193,.25)}
+    .add-task-btn{display:flex;align-items:center;justify-content:center;width:calc(100% - 22px);margin:8px 11px 10px;border-style:dashed;color:var(--accent-2);background:rgba(113,223,193,.035)}
+    .task-actions{display:flex;gap:5px;align-items:center;grid-column:2 / -1;justify-content:flex-start;margin-top:-3px}
+    .edit-task-btn{padding:4px 8px;font-size:9px;background:rgba(255,255,255,.035)}
+    .task{position:relative}
+    .empty-group{padding:12px;color:var(--muted);font-size:10px;text-align:center}
+    .editor-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:50;display:none;align-items:center;justify-content:center;padding:14px}
+    .editor-backdrop.open{display:flex}
+    .editor{width:min(100%,520px);max-height:92%;overflow:auto;background:#101d2d;border:1px solid rgba(150,190,210,.2);border-radius:20px;padding:17px;box-shadow:0 20px 70px #0009}
+    .editor h2{font-size:16px;margin:0 0 12px}
+    .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .editor label{display:flex;flex-direction:column;gap:5px;color:var(--soft);font-size:10px;min-width:0}
+    .editor label.full{grid-column:1/-1}
+    .editor input,.editor select,.editor textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;background:#0b1522;color:var(--text);padding:10px;font:inherit;font-size:13px;outline:none}
+    .editor textarea{min-height:60px;resize:vertical}
+    .editor input:focus,.editor select:focus,.editor textarea:focus{border-color:var(--accent)}
+    .icon-tools{display:flex;gap:7px;align-items:center;margin:8px 0}
+    .icon-tools input{flex:1}
+    .custom-icon-tools{display:flex;gap:7px;margin:8px 0}.custom-icon-tools input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;background:#0b1522;color:var(--text);padding:9px;font:inherit}.custom-icon-tools button{border:1px solid rgba(113,223,193,.25);border-radius:10px;background:rgba(113,223,193,.1);color:var(--accent-2);padding:8px 10px;font:inherit;font-size:10px;cursor:pointer}.icon-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;max-height:180px;overflow:auto;padding:5px;border:1px solid var(--line);border-radius:12px;background:#0b1522}
+    .icon-choice{min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid transparent;border-radius:10px;background:rgba(255,255,255,.025);font-size:9px;color:var(--soft);cursor:pointer}.icon-choice svg{width:23px;height:23px;stroke:var(--choice-color);stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}.icon-choice .emoji-icon{font-size:22px}.icon-choice.selected{border-color:var(--accent);background:rgba(113,223,193,.10)}
+    .icon-choice.selected{border-color:var(--accent);background:rgba(113,223,193,.15)}
+    .selected-icon{font-size:23px;min-width:35px;text-align:center}
+    .editor-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap}
+    .editor-actions button{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:#1a2b40;color:var(--text);font:inherit;font-size:11px;cursor:pointer}
+    .editor-actions .save{background:var(--accent);color:#09221e;border-color:var(--accent);font-weight:800}
+    .editor-actions .delete{color:#ff9e9e;border-color:rgba(255,120,120,.25)}
+    .editor-note{font-size:10px;color:var(--muted);margin:8px 0;line-height:1.8}
+    @media(max-width:380px){.editor-grid{grid-template-columns:1fr}.editor label.full{grid-column:auto}.icon-grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
+
+  
+    .task-icon{background:transparent!important;border:0!important;box-shadow:none!important}
+    /* کارت‌های شیشه‌ای کار‌ها */
+    .section-card{background:linear-gradient(145deg,rgba(25,43,64,.40),rgba(12,23,38,.30));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(190,215,240,.12);overflow:visible}
+    .task{position:relative;margin:7px 8px;padding:12px 12px;border:1px solid rgba(190,215,240,.105)!important;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 5px 18px rgba(0,0,0,.10);transition:transform .18s,border-color .18s,background .18s}
+    .task:last-child{border-bottom:1px solid rgba(190,215,240,.105)}
+    .task:active{transform:scale(.992)}
+    .task.current{border-color:rgba(113,223,193,.38)!important;background:linear-gradient(135deg,rgba(113,223,193,.12),rgba(255,255,255,.025));box-shadow:inset -3px 0 0 var(--accent),0 8px 22px rgba(0,0,0,.14)}
+    .task:has(.check:checked){background:linear-gradient(135deg,rgba(113,223,193,.075),rgba(255,255,255,.015))}
+    .task-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .task-icon .emoji-icon{font-size:23px;line-height:1}
+    .selected-icon svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .icon-choice svg{display:block}
+    .section-card .subgroup-label{background:rgba(113,223,193,.025);border-radius:10px;margin:5px 8px 2px;border:0}
+    #daySelector{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+    #daySelector .profile-btn{padding:9px 2px;font-size:11px;min-width:0}
+    .busy-row{display:grid;grid-template-columns:auto 1fr 92px auto;gap:10px;align-items:center;padding:12px 10px;margin:7px 0;border:1px solid rgba(190,215,240,.11);border-radius:14px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.015));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .busy-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.busy-icon .emoji-icon{font-size:21px}.busy-row:last-child{border-bottom:0}.busy-row input[type=number]{width:100%;min-width:0;background:#101d2b;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px}
+    .busy-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+    .copy-days{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}.copy-days label{background:#122033;padding:8px 10px;border-radius:9px}
+    .copy-dialog{padding:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;margin:12px 0}
+    [hidden]{display:none!important}
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m-13 5h18m-11 0v2h4v-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><path d="M5 17V5.8A2.8 2.8 0 0 1 7.8 3h8.4A2.8 2.8 0 0 1 19 5.8V17M5 9h14M7 17v2m10-2v2M5 14h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="14" r="1" fill="currentColor"/><circle cx="16" cy="14" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5Zm0 13A2.5 2.5 0 0 1 6.5 16H20M8 7h8m-8 3h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clean" viewBox="0 0 24 24"><path d="m14 3 7 7M4 20l9-9m-6 9H4v-3l9-9 3 3-9 9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 8.5h13v6.2a4.3 4.3 0 0 1-4.3 4.3H8.3A4.3 4.3 0 0 1 4 14.7Z" fill="#f3bd72" stroke="#d58b45" stroke-width="1.2"/><path d="M5.2 10h10.6v3.8H5.2Z" fill="#8b5135"/><path d="M17 10.3h1.5a2.1 2.1 0 0 1 0 4.2H17" fill="none" stroke="#eab16b" stroke-width="1.8" stroke-linecap="round"/><path d="M7.2 3.3c-1.1 1 .9 1.5 0 2.8m4-2.8c-1.1 1 .9 1.5 0 2.8" fill="none" stroke="#f3d8a5" stroke-width="1.6" stroke-linecap="round"/><path d="M7 20.3h8" stroke="#d58b45" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-language" viewBox="0 0 24 24"><path d="M4 5h12M10 3v2m5 0c-.8 5-4.2 8.5-9 10m1-6c1.5 2.3 3.5 4 6 5m-2 6 4-9 4 9m-6.5-2h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 1c5-4 9 4 14 0v10c-5 4-9-4-14 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-food" viewBox="0 0 24 24"><path d="M4 3v7m-2-7v4a2 2 0 0 0 4 0V3m-2 8v10m12-18v18m0-18c3 2 4 5 4 8h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 18V6m0 9h18v6m0-6V9a2 2 0 0 0-2-2h-5v8M3 11h5a3 3 0 0 1 3 3v1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 4a3 3 0 0 0-5.8 1A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2 6.3A3 3 0 0 0 12 19V4Zm0 0a3 3 0 0 1 5.8 1A3.5 3.5 0 0 1 20 11a3.5 3.5 0 0 1-2 6.3A3 3 0 0 1 12 19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 9v6m-3-4v2m18-2v2m-3-4v6M6 12h12M3 10v4m18-4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-voice" viewBox="0 0 24 24"><path d="M12 3v18m-4-14v10m8-10v10M3 9v6m18-6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.7-1.6 3-3.5 3S2 20.7 2 19s1.6-3 3.5-3S9 16.3 9 18Zm12-2c0 1.7-1.6 3-3.5 3S14 17.7 14 16s1.6-3 3.5-3 3.5 1.3 3.5 3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-checklist" viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M3 5l1 1 2-2m-3 8 1 1 2-2m-3 8 1 1 2-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><svg><use href="#i-spark"/></svg></div>
+        <div><div class="brand-title">روال روزانه</div><div class="brand-sub">برنامه شخصی · شنبه تا چهارشنبه</div></div>
+      </div>
+      <div class="date-pill" id="datePill">امروز</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">قدم‌به‌قدم، هر روز</div>
+          <h1>برنامه امروزت</h1>
+          <p class="hero-note" id="dailyMessage">هر روز، یک قدم کوچک هم پیشرفت است.</p>
+        </div>
+        <div><div class="clock" id="liveClock">--:--</div><div class="date-line" id="fullDate"> </div></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-ring">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="28"/><circle class="ring-value" id="ringValue" cx="32" cy="32" r="28"/></svg>
+          <div class="ring-center" id="percent">۰٪</div>
+        </div>
+        <div class="progress-info">
+          <div class="progress-title" id="progressTitle">شروع روز</div>
+          <div class="progress-caption" id="progressCaption">۰ کار از ۰ کار انجام شده</div>
+          <div class="bar"><span id="progressBar"></span></div>
+          <button class="priority-toggle" id="priorityToggle" type="button" aria-pressed="false"><svg><use href="#i-spark"/></svg><span id="priorityToggleLabel">روز شلوغ · فقط کارهای مهم</span></button>
+          <p class="priority-hint">در حالت روز شلوغ، فهرست جداگانه‌ای می‌سازی؛ برنامه اصلی و تیک‌های آن دست‌نخورده می‌مانند.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="profile-switch" id="daySelector" aria-label="انتخاب روز هفته"></div>
+    <div class="manage-row"><small id="profileHint">برنامه جداگانه این روز</small><button class="manage-btn" id="addFirstTask" type="button">＋ افزودن کار</button></div>
+    <div class="manage-row" style="margin-top:8px"><button class="manage-btn" id="copyPlanBtn" type="button">⧉ کپی برنامه این روز به روزهای دیگر</button><button class="manage-btn" id="busyViewBtn" type="button">فهرست روز شلوغ</button></div>
+    <nav class="filters" aria-label="رفتن به بخش‌های برنامه"><a class="filter active" href="#morning">صبح</a><a class="filter" href="#evening">عصر و شب</a></nav>
+
+    <section id="busyPanel" class="section" hidden>
+      <div class="section-head"><div class="section-title-wrap"><div class="section-title">فهرست منعطف روز شلوغ</div></div><div class="section-range">بدون ساعت‌بندی</div></div>
+      <p class="flex-note">کار‌ها را انتخاب کن و مدت موردنیاز هرکدام را وارد کن. ترتیب و زمان انجام کاملاً با خودت است.</p>
+      <div class="section-card" id="busyChoices"></div>
+      <div class="flex-note" id="busyTotal">مجموع زمان: ۰ دقیقه</div>
+      <button class="manage-btn" id="leaveBusyBtn" type="button">بازگشت به برنامه زمان‌بندی‌شده</button>
+    </section>
+    <section class="section" id="morning" data-section="morning">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">صبح</div></div><div class="section-range">۰۶:۰۰ — ۱۷:۳۰</div></div>
+      <div class="section-card">
+        <div class="subgroup-label"><span>شروع روز</span><span>۰۶:۰۰ — ۰۹:۳۰</span></div>
+        <div id="morningTasks"></div>
+        <div class="subgroup-label"><span>کارآموزی · زمان آزاد شرکت</span><span>۲ ساعت و ۳۰ دقیقه</span></div>
+        <div id="workTasks"></div>
+        <div class="subgroup-label"><span>بازه استراحت شرکت</span><span>۴۵ دقیقه</span></div>
+        <div id="breakTasks"></div>
+      </div>
+      <div class="flex-note"><strong>مسیر رفت:</strong> یک ساعت مطالعه در مسیر در نظر گرفته شده؛ اگر امکان مطالعه نداشتی، می‌توانی از زمان جبرانی مسیر برگشت استفاده کنی.</div>
+      <div class="flex-note">در زمان آزاد شرکت، دو بلوک یک‌ساعته یادگیری مهارت اصلی را با ۱۵ دقیقه زبان و ۱۵ دقیقه تحقیقات سربازی و نخبگی انجام بده. ساعت دقیق کار‌ها می‌تواند با شرایط شرکت جابه‌جا شود.</div>
+    </section>
+
+    <section class="section" id="evening" data-section="evening">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">عصر و شب</div></div><div class="section-range">۱۷:۳۰ — ۰۶:۰۰</div></div>
+      <div class="section-card">
+        <div class="subgroup-label"><span>مسیر برگشت</span><span>۱۷:۳۰ — ۱۹:۰۰</span></div>
+        <div id="returnTasks"></div>
+        <div class="subgroup-label"><span>برنامه عصر و شب</span><span>۱۹:۰۰ — ۰۶:۰۰</span></div>
+        <div id="eveningTasks"></div>
+      </div>
+      <div class="flex-note"><strong>زمان جبرانی عمومی:</strong> به‌جز ۱۵ دقیقه تمرین افزایش سرعت یادگیری، باقی مسیر برگشت برای جبران هر کار عقب‌افتاده است؛ نه فقط درس. اگر کاری عقب نمانده، می‌توانی استراحت کنی.</div>
+      <div class="flex-note"><strong>یادآوری:</strong> مهارت اضطراری فعلاً از برنامه حذف شده و بازه ۲۱:۱۰ تا ۲۲:۳۰ برای زمان آزاد و ریکاوری است.</div>
+    </section>
+
+    <footer class="footer">
+      <span>وضعیت کار‌ها روی همین دستگاه ذخیره می‌شود.</span>
+      <button class="reset" id="resetBtn">پاک‌کردن تیک‌های امروز</button>
+    </footer>
+    <div class="footer" style="padding-top:0;justify-content:flex-start"><button class="install" id="installBtn">افزودن به صفحه اصلی</button></div>
+  </main>
+  <div class="editor-backdrop" id="editorBackdrop" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+    <form class="editor" id="taskForm">
+      <h2 id="editorTitle">افزودن کار</h2>
+      <div class="editor-grid">
+        <label class="full">نام کار<input id="taskName" maxlength="70" required placeholder="مثلاً مطالعه پایتون"></label>
+        <label>بخش روز<select id="taskGroup"><option value="morning">صبح</option><option value="work">زمان آزاد شرکت</option><option value="breaks">استراحت شرکت</option><option value="returning">مسیر برگشت</option><option value="evening">عصر و شب</option></select></label>
+        <label>مدت (دقیقه)<input id="taskDuration" type="number" min="1" max="1440" value="30" required></label>
+        <label>ساعت شروع (اختیاری)<input id="taskStart" type="time"></label>
+        <label>نوع کار<select id="taskPriority"><option value="core">اصلی / ضروری</option><option value="supporting">پشتیبان / قابل‌حذف در روز شلوغ</option></select></label>
+        <label>نمایش کار<select id="taskKind"><option value="main">کار اصلی</option><option value="parallel">کار موازی</option></select></label>
+        <label>متن موازی (اختیاری)<input id="taskParallel" maxlength="70" placeholder="مثلاً کارهای موبایل"></label>
+        <label class="full">توضیحات (اختیاری)<textarea id="taskDesc" maxlength="180" placeholder="توضیح کوتاه"></textarea></label>
+        <label class="full">آیکون انتخابی <span style="display:flex;align-items:center;gap:8px"><span class="selected-icon" id="selectedIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v16H4z"/></svg></span><span id="selectedIconName">کتاب</span></span></label>
+      </div>
+      <div class="icon-tools"><input id="iconSearch" type="search" placeholder="جست‌وجوی آیکون..."><span class="editor-note">فهرست آیکون‌ها</span></div><div class="custom-icon-tools"><input id="customIconInput" maxlength="8" placeholder="نشانه دلخواه؛ مثل 🧩"><button type="button" id="addCustomIcon">افزودن به فهرست</button></div>
+      <div class="icon-grid" id="iconGrid" aria-label="انتخاب آیکون"></div>
+      <p class="editor-note">اگر ساعت شروع را خالی بگذاری، فقط مدت کار نمایش داده می‌شود. ساعت پایان از روی مدت محاسبه می‌شود.</p>
+      <div class="editor-actions"><button class="delete" id="deleteTask" type="button" hidden>حذف کار</button><span style="flex:1"></span><button id="cancelTask" type="button">انصراف</button><button class="save" type="submit">ذخیره کار</button></div>
+    </form>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const baseGroups={
+const STORAGE_SCHEDULE='routine-schedules-manual-v1';
+const LEGACY_BACKUP='routine-schedules-manual-v1-legacy-backup';
+const DAYS=[['شنبه',6],['یکشنبه',0],['دوشنبه',1],['سه‌شنبه',2],['چهارشنبه',3],['پنجشنبه',4],['جمعه',5]];
+    const baseGroups={
       morning:[
         {id:'m1',time:'۰۶:۰۰–۰۶:۴۵',title:'کارهای صبحگاهی و صبحانه',parallel:'کارهای موبایل هم‌زمان',desc:'',icon:'☕',duration:'۴۵ دقیقه',start:'06:00',end:'06:45',minutes:45,priority:'core'},
         {id:'m2',time:'۰۶:۴۵–۰۷:۴۵',title:'یادگیری مهارت اصلی',parallel:'۱۰ دقیقه نظافت',desc:'',icon:'📚',duration:'۱ ساعت',start:'06:45',end:'07:45',minutes:60,priority:'core'},
@@ -37,7 +370,7 @@ const baseGroups={
         {id:'b2',time:'',title:'چرت ظهر',desc:'زمان کوتاه برای خواب و بیدارشدن',icon:'🛏️',duration:'۱۵ دقیقه',minutes:15,priority:'core'},
         {id:'b3',time:'',title:'تمرین هوش کلامی',desc:'تمرین کوتاه روزانه',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}
       ],
-      returning:[{id:'r1',time:'در مسیر',title:'تمرین افزایش سرعت یادگیری',desc:'فعالیت ثابت مسیر برگشت',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}],
+      returning:[{id:'r1',time:'در مسیر',title:'تمرین افزایش سرعت یادگیری',desc:'کار ثابت مسیر برگشت',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}],
       evening:[
         {id:'e1',time:'۱۹:۰۰–۱۹:۱۰',title:'استراحت و آماده‌شدن برای باشگاه',desc:'آماده‌شدن برای شروع تمرین',icon:'🕒',duration:'۱۰ دقیقه',start:'19:00',end:'19:10',minutes:10,priority:'core'},
         {id:'e2',time:'۱۹:۱۰–۲۰:۱۰',title:'بدنسازی',desc:'جلسه تمرین باشگاه',icon:'🏋️',duration:'۱ ساعت',start:'19:10',end:'20:10',minutes:60,priority:'core'},
@@ -45,89 +378,149 @@ const baseGroups={
         {id:'e4',time:'۲۰:۲۵–۲۰:۳۰',title:'استراحت و آماده‌شدن',desc:'آماده‌سازی برای تمرین صدا',icon:'🕒',duration:'۵ دقیقه',start:'20:25',end:'20:30',minutes:5,priority:'core'},
         {id:'e5',time:'۲۰:۳۰–۲۰:۴۰',title:'تمرین صدای بم‌تر و رزونانس',desc:'ملایم و بدون فشار به حنجره',icon:'🎙️',duration:'۱۰ دقیقه',start:'20:30',end:'20:40',minutes:10,priority:'supporting'},
         {id:'e6',time:'۲۰:۴۰–۲۱:۱۰',title:'یادگیری و تمرین آواز',desc:'۳۰ دقیقه تمرین آواز',icon:'🎵',duration:'۳۰ دقیقه',start:'20:40',end:'21:10',minutes:30,priority:'core'},
-        {id:'e7',time:'۲۱:۱۰–۲۲:۳۰',title:'زمان آزاد و ریکاوری',desc:'بدون فعالیت اجباری',icon:'✨',duration:'۱ ساعت و ۲۰ دقیقه',start:'21:10',end:'22:30',minutes:80,priority:'core'},
+        {id:'e7',time:'۲۱:۱۰–۲۲:۳۰',title:'زمان آزاد و ریکاوری',desc:'بدون کار اجباری',icon:'✨',duration:'۱ ساعت و ۲۰ دقیقه',start:'21:10',end:'22:30',minutes:80,priority:'core'},
         {id:'e8',time:'۲۲:۳۰–۰۶:۰۰',title:'خواب',desc:'۷ ساعت و ۳۰ دقیقه فرصت خواب',icon:'🌙',duration:'۷ ساعت و ۳۰ دقیقه',start:'22:30',end:'06:00',minutes:450,priority:'core'}
       ]
     };
-const icons=[
-      ['پایه','☕ 🥤 🍵 🧋 🍽️ 🍲 🍳 🥪 🍎 🥗 🥑 🍞 🥛 🧃'],
-      ['مطالعه و کار','📚 📖 📕 📗 📘 📙 📝 ✏️ 🖊️ 📎 💻 🖥️ ⌨️ 🖱️ 📂 📁 📊 📈 🧮 🔬 💡'],
-      ['زمان و مسیر','🕒 ⏰ ⌛ 📅 🗓️ 🚶 🏃 🚲 🚌 🚗 🚆 ✈️ 🧭 🗺️'],
-      ['سلامت و ورزش','🏋️ 🏃‍♂️ 🚴 🧘 🤸 ⚽ 🏀 🎾 🏸 🥊 🥇 💪 🫀 🧠 🛏️ 🌙 ☀️'],
-      ['هنر و سرگرمی','🎵 🎶 🎤 🎙️ 🎧 🎸 🎹 🎻 🎨 🎬 📷 🎮 🎲 🧩'],
-      ['خانه و زندگی','🏠 🧹 🧺 🧼 🚿 🪥 🛒 🪴 🌱 🐈 🐕 🔑 🧰'],
-      ['ارتباط و هدف','📞 💬 ✉️ 🌐 🗣️ 🤝 👥 🎯 🚩 🏆 ⭐ ✨ 🔔 ❤️'],
-      ['فناوری و اداری','📱 📲 🔋 🔌 🪫 💾 💿 🖨️ 📡 🛜 🧑‍💻 👨‍💻 👩‍💻 🧑‍🔬 🧑‍🏫 🧑‍🎓 🗃️ 🗄️ 🧾 🧷'],
-      ['طبیعت و هوا','🌤️ ⛅ 🌥️ 🌦️ 🌧️ ⛈️ 🌩️ ❄️ ☃️ 🌈 🌊 🔥 🌪️ 🌍 🌎 🌏 🌳 🌲 🌴 🌵 🌷 🌹 🌻 🌼 🍀 🍁 🍂'],
-      ['سفر و مکان','🏕️ 🏖️ 🏝️ 🏜️ 🏔️ ⛰️ 🏙️ 🌆 🌃 🏛️ 🏢 🏬 🏪 🏫 🏥 🏦 🏨 🛣️ 🛤️ ⛽ 🚉 🚇 🚕 🚙 🚚 🚑 🚒'],
-      ['علم و ابزار','🧪 🧫 🧬 🔭 🔍 🔎 ⚙️ 🔧 🔨 🪛 🪜 📐 📏 📌 🧲 🧯 🧰 🪛 🧱 🪚'],
-      ['غذا و میوه','🍇 🍉 🍊 🍋 🍌 🍍 🥭 🍑 🍒 🍓 🫐 🥝 🍅 🥕 🌽 🥦 🥒 🥜 🍕 🍔 🍟 🌮 🍜 🍣 🍰 🍪'],
-      ['احساس و نشانه','😀 😃 😄 😊 🙂 😎 🤔 😴 😌 😅 😍 🥳 🙌 👏 👍 👎 💯 ❗ ❓ ⚠️ ✅ ❌ ♻️ 🔒 🔓']
-    ];
-const DAYS=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'],KEYS=['sat','sun','mon','tue','wed','thu','fri'];
-const GROUPS={morning:'شروع روز',work:'زمان آزاد شرکت',breaks:'استراحت شرکت',returning:'مسیر برگشت',evening:'برنامه عصر و شب'};
-const SKEY='routine-schedules-manual-v1',OLD_CHECK='daily-routine-checks-v2-',OLD_CHECK1='daily-routine-checks-v1-',CHECK_PREFIX='routine-checks-v3-',BUSY_KEY='routine-busy-v1';
-const $=id=>document.getElementById(id),clone=x=>JSON.parse(JSON.stringify(x));
-function empty(){return {morning:[],work:[],breaks:[],returning:[],evening:[]}}
-function normalize(g){let x=empty();for(let k of Object.keys(x))if(Array.isArray(g?.[k]))x[k]=g[k];return x}
+
+const iconLibrary=[
+ {id:'morning',label:'شروع روز',category:'روزمره',color:'#f2bd72',svg:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>'},
+ {id:'coffee',label:'قهوه و صبحانه',category:'خوراکی',color:'#e6ad78',svg:'<path d="M4 8h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm13 2h2a2 2 0 1 1 0 4h-2M7 3v2m4-2v2m4-2v2"/>'},
+ {id:'toothbrush',label:'آمادگی و بهداشت',category:'روزمره',color:'#72d6c6',svg:'<path d="m5 20 9-9m-7-7 7 7m-9-9 4 4m8 8 3 3M14 4l6 6M4 14l6 6"/>'},
+ {id:'laptop',label:'مهارت‌آموزی و رایانه',category:'کار و یادگیری',color:'#8eb9fa',svg:'<rect x="4" y="4" width="16" height="12" rx="2"/><path d="M2 20h20l-2-4H4l-2 4Z"/><path d="m9 9 2 2-2 2m4 0h2"/>'},
+ {id:'clock',label:'زمان آزاد و ساعت',category:'زمان',color:'#a9b8c9',svg:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'},
+ {id:'bus',label:'رفت‌وآمد',category:'مسیر',color:'#f0a36e',svg:'<rect x="5" y="3" width="14" height="17" rx="3"/><path d="M5 9h14M8 15h.01M16 15h.01M8 20v2m8-2v2"/>'},
+ {id:'book',label:'مطالعه',category:'کار و یادگیری',color:'#8eb9fa',svg:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/><path d="M4 18a2.5 2.5 0 0 1 2.5-2.5H20M8 7h8m-8 4h6"/>'},
+ {id:'language',label:'زبان‌آموزی',category:'کار و یادگیری',color:'#71d6d0',svg:'<path d="M4 5h12M10 3v2m5 0c0 6-4 10-9 12m2-8c1 3 4 6 8 8M16 14l4 7m-6-3h8"/>'},
+ {id:'research',label:'پژوهش و بررسی',category:'کار و یادگیری',color:'#e7c17d',svg:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5m-2.5-2.5v5"/>'},
+ {id:'meal',label:'ناهار و شام',category:'خوراکی',color:'#f18c79',svg:'<path d="M3 12h18a9 9 0 0 1-18 0Zm9-9v4m-4-2 1 2m6-2-1 2"/>'},
+ {id:'bed',label:'چرت و خواب',category:'سلامت',color:'#b69af0',svg:'<path d="M3 18V6m0 9h18v6m-18-6V11h7a4 4 0 0 1 4 4m-4 0v-2a3 3 0 0 1 3-3h4a4 4 0 0 1 4 4"/>'},
+ {id:'brain',label:'تمرین ذهن و یادگیری',category:'سلامت و یادگیری',color:'#bd9af2',svg:'<path d="M9 4a3 3 0 0 0-5 2 3 3 0 0 0 0 5 3 3 0 0 0 2 5 3 3 0 0 0 5 3V5a3 3 0 0 0-2-1Zm6 0a3 3 0 0 1 5 2 3 3 0 0 1 0 5 3 3 0 0 1-2 5 3 3 0 0 1-5 3V5a3 3 0 0 1 2-1Z"/><path d="M7 9h2m-1 4h2m7-4h-2m1 4h-2"/>'},
+ {id:'speech',label:'هوش کلامی و گفتگو',category:'ذهن و ارتباط',color:'#72c9df',svg:'<path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8m-8 4h5"/>'},
+ {id:'dumbbell',label:'بدنسازی',category:'ورزش',color:'#f0a16e',svg:'<path d="M3 9v6m4-9v12m10-12v12m4-9v6M7 12h10"/>'},
+ {id:'microphone',label:'تمرین صدا',category:'هنر',color:'#70d6c4',svg:'<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8"/>'},
+ {id:'music',label:'آواز و موسیقی',category:'هنر',color:'#e49ad3',svg:'<path d="M9 18V5l12-2v13M9 8l12-2"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'},
+ {id:'recovery',label:'استراحت و بازیابی',category:'سلامت',color:'#9bd6b5',svg:'<path d="M4 13a8 8 0 1 1 16 0v5H4v-5Z"/><path d="M2 18h20M8 13v-2m8 2v-2"/>'},
+ {id:'moon',label:'خواب شب',category:'زمان و سلامت',color:'#9fb4ef',svg:'<path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z"/>'},
+ {id:'clean',label:'نظافت',category:'خانه',color:'#83d5c6',svg:'<path d="m4 20 10-10m-3-3 3 3m-5-5 3 3m5-5 3 3M3 21l4-1-3-3-1 4Z"/>'},
+ {id:'phone',label:'کارهای موبایل',category:'فناوری',color:'#79c7e8',svg:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4m-3 13h2"/>'},
+ {id:'target',label:'هدف و پیگیری',category:'کار و یادگیری',color:'#e7bd75',svg:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>'},
+ {id:'water',label:'آب و نوشیدنی',category:'خوراکی',color:'#6ecbe8',svg:'<path d="M12 2s7 8 7 13a7 7 0 0 1-14 0c0-5 7-13 7-13Z"/><path d="M8 15a4 4 0 0 0 4 4"/>'},
+ {id:'walk',label:'پیاده‌روی',category:'ورزش',color:'#91d39b',svg:'<circle cx="14" cy="4" r="2"/><path d="m12 8-3 5 4 2 2 6m-6-8-4 4-3 1m10-5 4 2 3 4"/>'},
+ {id:'run',label:'دویدن',category:'ورزش',color:'#9bd18d',svg:'<circle cx="15" cy="4" r="2"/><path d="m12 8-3 4 4 3 2 6m-6-9-4 1-2 4m10-2 4-3 3 1"/>'},
+ {id:'car',label:'خودرو',category:'مسیر',color:'#f0a36e',svg:'<path d="m3 14 2-6h14l2 6v5h-3v-2H6v2H3v-5Z"/><path d="M5 14h14M7 11h.01M17 11h.01"/>'},
+ {id:'calendar',label:'برنامه‌ریزی',category:'زمان',color:'#e4c17d',svg:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-13 4h2m3 0h2m-7 3h2"/>'},
+ {id:'check',label:'انجام کار',category:'نشانه‌ها',color:'#71dfc1',svg:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'},
+ {id:'heart',label:'سلامت',category:'سلامت',color:'#ef91a8',svg:'<path d="M20.8 8.8c0 5.2-8.8 11-8.8 11s-8.8-5.8-8.8-11A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 8.8 2.8Z"/>'},
+ {id:'plant',label:'طبیعت',category:'طبیعت',color:'#8dcc91',svg:'<path d="M12 21v-9m0 4C5 16 3 11 4 5c6 0 10 3 8 11Zm0-4c0-6 4-9 9-9 1 6-2 10-9 10Z"/>'},
+ {id:'camera',label:'عکاسی',category:'هنر',color:'#b9a2ef',svg:'<path d="M4 7h4l2-3h4l2 3h4v13H4V7Z"/><circle cx="12" cy="13" r="4"/>'},
+ {id:'game',label:'بازی و سرگرمی',category:'سرگرمی',color:'#c3a1ec',svg:'<path d="M6 8h12a4 4 0 0 1 4 4v5a2 2 0 0 1-3 1l-3-3H8l-3 3a2 2 0 0 1-3-1v-5a4 4 0 0 1 4-4Z"/><path d="M7 11v4m-2-2h4m7-1h.01m3 2h.01"/>'},
+ {id:'mail',label:'پیام و ارتباط',category:'ارتباط',color:'#78c8d8',svg:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>'},
+ {id:'tools',label:'ابزار و تعمیر',category:'ابزار',color:'#d3b17d',svg:'<path d="m14 7 3-3a5 5 0 0 1-6 6L5 16a2 2 0 0 0 3 3l6-6a5 5 0 0 1 6-6l-3 3"/>'},
+ {id:'spark',label:'ایده و خلاقیت',category:'نشانه‌ها',color:'#e9c66f',svg:'<path d="m12 2 1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2Z"/>'}
+];
+const legacyIconMap={'☕':'coffee','📚':'book','🕒':'clock','🚌':'bus','🌐':'language','🚩':'research','🍽️':'meal','🍲':'meal','🛏️':'bed','🧠':'brain','🏋️':'dumbbell','🎙️':'microphone','🎵':'music','✨':'recovery','🌙':'moon'};
+function iconForTitle(title,old=''){
+ if(iconLibrary.some(x=>x.id===old)||loadCustomIconsSafe().some(x=>x.id===old))return old;
+ const t=String(title||'');
+ if(/بدنساز|باشگاه|تمرین باشگاه/.test(t))return 'dumbbell';
+ if(/صبحگاهی/.test(t))return 'morning';
+ if(/خواب/.test(t))return 'moon';
+ if(/صدای بم|رزونانس|تمرین صدا/.test(t))return 'microphone';
+ if(/آواز|موسیقی/.test(t))return 'music';
+ if(/چرت/.test(t))return 'bed';
+ if(/ناهار|شام|صبحانه/.test(t))return 'meal';
+ if(/زبان/.test(t))return 'language';
+ if(/تحقیقات|سربازی|نخبگی|پژوهش/.test(t))return 'research';
+ if(/هوش کلامی|گفتگو/.test(t))return 'speech';
+ if(/سرعت یادگیری|تمرین ذهن/.test(t))return 'brain';
+ if(/مسیر رفت|مسیر برگشت|رفت.?و.?آمد/.test(t))return 'bus';
+ if(/نظافت|تمیز/.test(t))return 'clean';
+ if(/موبایل/.test(t))return 'phone';
+ if(/مهارت اصلی|پایتون|یادگیری مهارت/.test(t))return 'laptop';
+ if(/استراحت و آماده/.test(t))return 'clock';
+ if(/زمان آزاد|ریکاوری|بازیابی/.test(t))return 'recovery';
+ if(/مطالعه/.test(t))return 'book';
+ return legacyIconMap[old]||'spark';
+}
+function iconSvg(icon){const custom=loadCustomIconsSafe().find(x=>x.id===icon);if(custom)return `<span class=\"emoji-icon\">${escapeHTML(custom.emoji)}</span>`;const item=iconLibrary.find(x=>x.id===icon);return item?`<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${item.svg}</svg>`:`<span class="emoji-icon">${escapeHTML(icon||'✦')}</span>`}
+function loadCustomIconsSafe(){try{return JSON.parse(localStorage.getItem('routine-custom-icons-v1')||'[]')}catch(e){return []}}
+function iconColor(icon){return iconLibrary.find(x=>x.id===icon)?.color||'#b9c8d8'}
+function iconName(icon){return iconLibrary.find(x=>x.id===icon)?.label||'آیکون دلخواه'}
+const groupNames={morning:'شروع روز',work:'زمان آزاد شرکت',breaks:'استراحت شرکت',returning:'مسیر برگشت',evening:'برنامه عصر و شب'};
+const dailyMessages=['پیشرفت واقعی از کارهای کوچک و پیوسته ساخته می‌شود.','لازم نیست سریع‌ترین باشی؛ فقط پیوستگی را حفظ کن.','امروز را با قدم بعدی بساز، نه با نگرانی درباره کل مسیر.','تمرکز روی کار مهم، بهتر از شلوغ‌کردن فهرست کارهاست.','استراحت بخشی از مسیر پیشرفت است، نه نقطه مقابل آن.'];
+const clone=x=>JSON.parse(JSON.stringify(x));
+function freshSchedule(){return normalizeSchedule(clone(baseGroups))}
+function normalizeSchedule(x){const out={};for(const g of Object.keys(groupNames))out[g]=Array.isArray(x?.[g])?x[g].map(t=>({...t,icon:iconForTitle(t.title,t.icon)})):[];return out}
 function loadSchedules(){
- let raw=null;try{raw=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){}
- if(raw?.version===3&&raw.days&&KEYS.every(k=>raw.days[k]))return raw;
- let days={};
- if(raw?.days&&raw.days.sat){KEYS.forEach(k=>days[k]=normalize(raw.days[k]));}
- else if(raw?.weekday&&raw?.weekend){KEYS.forEach((k,i)=>days[k]=clone(normalize(i<5?raw.weekday:raw.weekend)));}
- else if(raw&&raw.morning){KEYS.forEach((k,i)=>days[k]=clone(normalize(raw)));}
- else {KEYS.forEach((k,i)=>days[k]=clone(normalize(i<5?baseGroups:empty())));}
- const next={version:3,days};localStorage.setItem(SKEY,JSON.stringify(next));return next;
+ let raw=null;try{raw=JSON.parse(localStorage.getItem(STORAGE_SCHEDULE)||'null')}catch(e){}
+ if(raw?.days){const d={};DAYS.forEach(([name])=>d[name]=normalizeSchedule(raw.days[name]));return d}
+ const days={};
+ if(raw?.weekday||raw?.weekend){
+   // Migration: copy old weekday schedule to Sat-Wed and weekend schedule to Thu-Fri.
+   const wd=raw.weekday?normalizeSchedule(raw.weekday):freshSchedule();
+   const we=raw.weekend?normalizeSchedule(raw.weekend):freshSchedule();
+   DAYS.forEach(([name],i)=>days[name]=clone(i<5?wd:we));
+   // Keep a byte-for-byte JSON backup of the old structure before replacing the key.
+   try{if(!localStorage.getItem(LEGACY_BACKUP))localStorage.setItem(LEGACY_BACKUP,JSON.stringify(raw))}catch(e){}
+   return days;
+ }
+ DAYS.forEach(([name])=>days[name]=freshSchedule());return days;
 }
-let schedules=loadSchedules(),busyData={};try{busyData=JSON.parse(localStorage.getItem(BUSY_KEY)||'{}')}catch(e){}
-let index=(new Date().getDay()+1)%7,day=KEYS[index],editingId=null,selectedIcon='📚',busyMode=false,checks={};
-function dateKey(){let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function checkKey(){return CHECK_PREFIX+dateKey()}
-function loadChecks(){try{let old=localStorage.getItem(OLD_CHECK+dateKey())||localStorage.getItem(OLD_CHECK1+dateKey());return JSON.parse(localStorage.getItem(checkKey())||old||'{}')}catch(e){return {}}}
-checks=loadChecks();
-function save(){localStorage.setItem(SKEY,JSON.stringify(schedules))}
-function saveChecks(){localStorage.setItem(checkKey(),JSON.stringify(checks))}
-function saveBusy(){localStorage.setItem(BUSY_KEY,JSON.stringify(busyData))}
-function fa(n){return String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])}
-function fmt(n){n=Number(n)||0;return n>=60?(Math.floor(n/60)?fa(Math.floor(n/60))+' ساعت ':'')+(n%60?fa(n%60)+' دقیقه':''):fa(n)+' دقیقه'}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>$('toast').classList.remove('show'),2400)}
-function allTasks(){return Object.values(schedules.days).flatMap(g=>Object.values(g).flat())}
-const iconColors={'☕':'#e8b46e','📚':'#8eb9fa','🕒':'#a6b8ca','🚌':'#f39b70','🌐':'#69cbd0','🚩':'#e9bd68','🍽️':'#f18c79','🛏️':'#b69af0','🧠':'#bd9af2','🏋️':'#eda16d','🎙️':'#70d6c4','🎵':'#e49ad3','✨':'#ebc66f','🌙':'#9fb4ef','💻':'#77c9e7','🧹':'#d6b47b','🏃':'#ed9c7d','🧘':'#a9a0ee'};
-const paths=['<path d="M4 19h16M6 16l6-12 6 12M9 12h6"/>','<path d="M4 5h16v14H4zM8 9h8M8 13h5"/>','<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>','<path d="M5 20V8l7-4 7 4v12M9 20v-6h6v6"/>','<path d="M4 7h16M7 4v6m10-6v6M5 11h14v9H5z"/>','<path d="M5 19l14-14M7 5h12v12"/>'];
-function iconSVG(icon){let color=iconColors[icon]||'#9fc7dc',n=[...String(icon)].reduce((a,c)=>a+c.codePointAt(0),0)%paths.length;return `<svg viewBox="0 0 24 24" style="--c:${color}">${paths[n]}</svg>`}
-function renderDays(){$('days').innerHTML=DAYS.map((n,i)=>`<button class="day ${KEYS[i]===day?'active':''}" data-day="${KEYS[i]}">${n}</button>`).join('');$('days').querySelectorAll('button').forEach(b=>b.onclick=()=>switchDay(b.dataset.day))}
-function switchDay(k){day=k;busyMode=false;$('normalPanel').style.display='block';$('busyPanel').style.display='none';$('heading').textContent='برنامه '+DAYS[KEYS.indexOf(k)];renderDays();renderTasks()}
-function renderTasks(){
- let html='',all=Object.values(schedules.days[day]).flat(),done=all.filter(t=>checks[t.id]).length;
- for(let [g,label] of Object.entries(GROUPS)){let a=schedules.days[day][g]||[];html+=`<section class="section"><div class="section-head">${label}</div><div class="section-card">`;
- if(!a.length)html+='<div class="empty">فعالیتی ثبت نشده است.</div>';
- a.forEach(t=>html+=`<div class="task ${checks[t.id]?'done':''}"><span class="task-icon">${iconSVG(t.icon||'📌')}</span><div><div class="task-title">${esc(t.title)}</div><div class="task-meta">${t.start?fa(t.start)+' · ':''}${fmt(t.minutes)}${t.desc?' · '+esc(t.desc):''}</div></div><button class="edit" data-edit="${esc(t.id)}" aria-label="ویرایش">✎</button><input type="checkbox" data-check="${esc(t.id)}" ${checks[t.id]?'checked':''} aria-label="انجام شد"></div>`);
- html+=`</div><button class="add" data-add="${g}">＋ افزودن به ${label}</button></section>`}
- $('normalPanel').innerHTML=html;
- $('normalPanel').querySelectorAll('[data-check]').forEach(c=>c.onchange=()=>{checks[c.dataset.check]=c.checked;saveChecks();renderTasks()});
- $('normalPanel').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openEditor(findTask(b.dataset.edit)));
- $('normalPanel').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openEditor(null,b.dataset.add));
- let pct=all.length?Math.round(done/all.length*100):0;$('percent').textContent=fa(pct)+'٪';$('ring').style.setProperty('--pct',pct+'%');$('bar').style.width=pct+'%';$('progressCaption').textContent=`${fa(done)} از ${fa(all.length)} فعالیت انجام شده`;$('progressTitle').textContent=all.length&&done===all.length?'برنامه کامل شد':done?'در حال پیشرفت':'شروع روز';
-}
-function findTask(id){for(let [g,a] of Object.entries(schedules.days[day])){let t=a.find(x=>x.id===id);if(t)return {...t,_group:g}}return null}
-const catalog=()=>{let map=new Map();allTasks().forEach(t=>{if(!map.has(t.title))map.set(t.title,{...t})});return [...map.values()]};
-function renderIconGrid(){let items=icons.flatMap(c=>c.items);$('iconGrid').innerHTML=items.map(i=>`<button type="button" class="icon-choice ${i===selectedIcon?'selected':''}" data-icon="${esc(i)}">${i}</button>`).join('');$('iconGrid').querySelectorAll('[data-icon]').forEach(b=>b.onclick=()=>{selectedIcon=b.dataset.icon;renderIconGrid()})}
-function openEditor(t=null,g='morning'){editingId=t?.id||null;$('editorTitle').textContent=t?'ویرایش فعالیت':'افزودن فعالیت';$('taskName').value=t?.title||'';$('taskGroup').value=t?._group||g;$('taskDuration').value=t?.minutes||30;$('taskStart').value=t?.start||'';$('taskDesc').value=t?.desc||'';selectedIcon=t?.icon||'📚';$('deleteTask').style.display=t?'inline-block':'none';renderIconGrid();$('editorBg').classList.add('open')}
-$('addBtn').onclick=()=>openEditor();$('cancelTask').onclick=()=>$('editorBg').classList.remove('open');
-$('taskForm').onsubmit=e=>{e.preventDefault();let title=$('taskName').value.trim(),minutes=Number($('taskDuration').value);if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){toast('نام و مدت معتبر وارد کن');return}
- let task=editingId?findTask(editingId):{id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};
- if(editingId){let old=task._group;schedules.days[day][old]=schedules.days[day][old].filter(t=>t.id!==editingId)}
- Object.assign(task,{title,minutes,start:$('taskStart').value,desc:$('taskDesc').value.trim(),icon:selectedIcon});
- schedules.days[day][$('taskGroup').value].push(task);save();$('editorBg').classList.remove('open');renderTasks();toast('ذخیره شد')};
-$('deleteTask').onclick=()=>{if(!editingId||!confirm('این فعالیت حذف شود؟'))return;let t=findTask(editingId);schedules.days[day][t._group]=schedules.days[day][t._group].filter(x=>x.id!==editingId);delete checks[editingId];save();saveChecks();$('editorBg').classList.remove('open');renderTasks();toast('فعالیت حذف شد')};
-$('copyBtn').onclick=()=>{$('copyDays').innerHTML=DAYS.map((n,i)=>`<label><input type="checkbox" value="${KEYS[i]}" ${KEYS[i]===day?'disabled':''}>${n}</label>`).join('');$('copyBg').classList.add('open')};
-$('cancelCopy').onclick=()=>$('copyBg').classList.remove('open');
-$('doCopy').onclick=()=>{let targets=[...$('copyDays').querySelectorAll('input:checked')].map(x=>x.value);if(!targets.length){toast('روز مقصد انتخاب نشده');return}let snap=clone(schedules.days[day]);targets.forEach(k=>{schedules.days[k]=clone(snap);Object.values(schedules.days[k]).flat().forEach(t=>{t.id='copy-'+k+'-'+t.id;delete checks[t.id]})});save();$('copyBg').classList.remove('open');toast('کپی مستقل انجام شد')};
-function enterBusy(){busyMode=true;$('normalPanel').style.display='none';$('busyPanel').style.display='block';let list=busyData[day]||[],cat=catalog();$('busyRows').innerHTML=cat.map(t=>{let x=list.find(y=>y.title===t.title);return `<label class="busy-row"><input type="checkbox" data-bsel="${esc(t.title)}" ${x?'checked':''}><span>${esc(t.title)}</span><input type="number" min="1" max="1440" data-bmin="${esc(t.title)}" value="${x?.minutes||t.minutes||30}" ${x?'':'disabled'}><input type="checkbox" data-bdone="${esc(t.title)}" ${x?.done?'checked':''} ${x?'':'disabled'} aria-label="انجام شد"></label>`}).join('')||'<div class="empty">هنوز فعالیتی در برنامه‌ها وجود ندارد.</div>';wireBusy();updateBusyTotal()}
-function wireBusy(){$('busyRows').querySelectorAll('[data-bsel]').forEach(c=>c.onchange=()=>{let title=c.dataset.bsel,input=[...$('busyRows').querySelectorAll('[data-bmin]')].find(x=>x.dataset.bmin===title);input.disabled=!c.checked;let arr=busyData[day]||(busyData[day]=[]);if(c.checked){let t=catalog().find(x=>x.title===title);arr.push({title,minutes:Number(input.value)||t.minutes||30,done:false})}else busyData[day]=arr.filter(x=>x.title!==title);saveBusy();updateBusyTotal()});$('busyRows').querySelectorAll('[data-bmin]').forEach(i=>i.onchange=()=>{let x=(busyData[day]||[]).find(x=>x.title===i.dataset.bmin);if(x)x.minutes=Number(i.value)||1;saveBusy();updateBusyTotal()});$('busyRows').querySelectorAll('[data-bdone]').forEach(c=>c.onchange=()=>{let x=(busyData[day]||[]).find(x=>x.title===c.dataset.bdone);if(x){x.done=c.checked;saveBusy()}})}
-function updateBusyTotal(){let sum=(busyData[day]||[]).reduce((a,x)=>a+(Number(x.minutes)||0),0);$('busyTotal').textContent='مجموع زمان موردنیاز: '+fmt(sum)}
-$('busyBtn').onclick=enterBusy;$('exitBusy').onclick=()=>{$('busyPanel').style.display='none';$('normalPanel').style.display='block';busyMode=false};
-$('clock').textContent=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(new Date());$('dateLabel').textContent=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',day:'numeric',month:'long'}).format(new Date());renderDays();switchDay(day);
-</script></body></html>
+let schedules=loadSchedules();
+let activeDay=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long'}).format(new Date());
+if(!DAYS.some(x=>x[0]===activeDay)){const js=new Date().getDay();activeDay=DAYS.find(x=>x[1]===js)?.[0]||'شنبه'}
+let groups=schedules[activeDay],allTasks=[],activeDateKey=localDateKey(),checks=loadChecks(activeDateKey),editingId=null,selectedIcon='📚',busyMode=false;
+let busyPlans=loadBusyPlans();
+function localDateKey(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function storageKey(k){return 'daily-routine-checks-v2-'+k}
+function loadChecks(k){try{const a=localStorage.getItem(storageKey(k));if(a)return JSON.parse(a);const b=localStorage.getItem('daily-routine-checks-v1-'+k);if(b){localStorage.setItem(storageKey(k),b);return JSON.parse(b)}return {}}catch(e){return {}}}
+function saveChecks(){try{localStorage.setItem(storageKey(activeDateKey),JSON.stringify(checks))}catch(e){showToast('ذخیره تیک‌ها ناموفق بود.')}updateProgress()}
+function saveSchedules(){try{localStorage.setItem(STORAGE_SCHEDULE,JSON.stringify({schema:2,days:schedules}));return true}catch(e){showToast('ذخیره برنامه ناموفق بود؛ فضای ذخیره را بررسی کن.');return false}}
+function loadBusyPlans(){try{return JSON.parse(localStorage.getItem('routine-busy-plans-v1')||'{}')}catch(e){return {}}}
+function saveBusyPlans(){try{localStorage.setItem('routine-busy-plans-v1',JSON.stringify(busyPlans))}catch(e){showToast('ذخیره فهرست روز شلوغ ناموفق بود.')}}
+function fa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])}
+function fmtDuration(n){if(n%60===0)return fa(n/60)+' ساعت';if(n>60)return fa(Math.floor(n/60))+' ساعت و '+fa(n%60)+' دقیقه';return fa(n)+' دقیقه'}
+function addMinutes(time,mins){if(!time)return '';let [h,m]=time.split(':').map(Number),v=(h*60+m+mins)%1440;return String(Math.floor(v/60)).padStart(2,'0')+':'+String(v%60).padStart(2,'0')}
+function timeLabel(t){return t.start&&Number.isFinite(Number(t.minutes))?fa(t.start)+'–'+fa(addMinutes(t.start,t.minutes)):t.time||''}
+function colorFor(icon){return iconColor(icon)}
+function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${fmtDuration(t.minutes||0)}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button></span></div>`}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const targetIds={morning:'morningTasks',work:'workTasks',breaks:'breakTasks',returning:'returnTasks',evening:'eveningTasks'};
+function renderDays(){const el=document.getElementById('daySelector');el.innerHTML='';DAYS.forEach(([name])=>{const b=document.createElement('button');b.type='button';b.className='profile-btn'+(name===activeDay?' active':'');b.textContent=name;b.addEventListener('click',()=>switchDay(name));el.appendChild(b)})}
+function renderTasks(){groups=schedules[activeDay];allTasks=Object.values(groups).flat();for(const key of Object.keys(groupNames)){const el=document.getElementById(targetIds[key]),arr=groups[key]||[];el.innerHTML=arr.map(taskHTML).join('')+(arr.length?'':'<div class="empty-group">هنوز کاری در این بخش ثبت نشده است.</div>')+`<button type="button" class="add-task-btn" data-add="${key}">＋ افزودن کار به ${groupNames[key]}</button>`}
+document.querySelectorAll('.check').forEach(i=>i.addEventListener('change',e=>{checks[e.target.dataset.id]=e.target.checked;saveChecks()}));document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEditor(findTask(b.dataset.edit))));document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>openEditor(null,b.dataset.add)));document.body.classList.remove('priority-mode');updateProgress();markCurrentTask(new Date())}
+function findTask(id){for(const [g,a] of Object.entries(groups)){const t=a.find(x=>x.id===id);if(t)return {...t,_group:g}}return null}
+function updateProgress(){const relevant=busyMode?(busyPlans[activeDay]||[]):allTasks;const done=relevant.filter(t=>busyMode?!!t.done:!!checks[t.id]).length,total=relevant.length,pct=total?Math.round(done/total*100):0;document.getElementById('percent').textContent=fa(pct)+'٪';document.getElementById('progressCaption').textContent=total?`${fa(done)} از ${fa(total)} کار انجام شده`:'برای این روز هنوز کاری تعریف نشده است';document.getElementById('progressBar').style.width=pct+'%';document.getElementById('ringValue').style.strokeDashoffset=176-176*pct/100;document.getElementById('progressTitle').textContent=total?(done===total?'فهرست امروز کامل شد 🎉':busyMode?'فهرست روز شلوغ فعال است':done?'ادامه بده؛ خوب پیش می‌روی':'شروع روز'):'برنامه‌ات را بساز'}
+function switchDay(name){activeDay=name;busyMode=false;renderDays();renderTasks();showNormalView();document.getElementById('profileHint').textContent='برنامه جداگانه '+name;}
+function showNormalView(){document.getElementById('busyPanel').hidden=true;document.querySelectorAll('#morning,#evening').forEach(x=>x.hidden=false);document.querySelector('.filters').hidden=false;document.getElementById('addFirstTask').hidden=false;document.getElementById('copyPlanBtn').hidden=false;document.getElementById('busyViewBtn').textContent='فهرست روز شلوغ'}
+function showBusyView(){busyMode=true;document.querySelectorAll('#morning,#evening').forEach(x=>x.hidden=true);document.querySelector('.filters').hidden=true;document.getElementById('addFirstTask').hidden=true;document.getElementById('copyPlanBtn').hidden=true;document.getElementById('busyPanel').hidden=false;document.getElementById('busyViewBtn').textContent='نمایش برنامه زمان‌بندی‌شده';renderBusyChoices();updateProgress()}
+function renderBusyChoices(){const chosen=busyPlans[activeDay]||[],selected=new Map(chosen.map(x=>[x.sourceId,x]));const available=Object.values(schedules[activeDay]).flat();const box=document.getElementById('busyChoices');box.innerHTML=available.map(t=>{const v=selected.get(t.id);return `<div class="busy-row"><input type="checkbox" aria-label="انتخاب کار" data-busy-select="${t.id}" ${v?'checked':''}><span class="busy-icon" style="color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span>${escapeHTML(t.title)}</span><input type="number" min="1" max="1440" step="1" aria-label="مدت دقیقه" data-busy-minutes="${t.id}" value="${v?.minutes??t.minutes??30}" ${v?'':'disabled'}><input type="checkbox" aria-label="انجام شد" data-busy-done="${t.id}" ${v?.done?'checked':''} ${v?'':'disabled'}></div>`}).join('')||'<p>ابتدا در برنامه این روز کاری اضافه کن.</p>';box.querySelectorAll('[data-busy-select]').forEach(ch=>ch.addEventListener('change',()=>{const input=box.querySelector(`[data-busy-minutes="${ch.dataset.busySelect}"]`);input.disabled=!ch.checked;const done=box.querySelector(`[data-busy-done="${ch.dataset.busySelect}"]`);done.disabled=!ch.checked;saveBusyFromUI()}));box.querySelectorAll('[data-busy-minutes]').forEach(inp=>inp.addEventListener('change',saveBusyFromUI));box.querySelectorAll('[data-busy-minutes]').forEach(inp=>inp.addEventListener('input',updateBusyTotal));box.querySelectorAll('[data-busy-done]').forEach(ch=>ch.addEventListener('change',()=>{const item=(busyPlans[activeDay]||[]).find(x=>x.sourceId===ch.dataset.busyDone);if(item){item.done=ch.checked;saveBusyPlans();updateProgress()}}));updateBusyTotal()}
+function saveBusyFromUI(){const available=Object.values(schedules[activeDay]).flat(),arr=[];document.querySelectorAll('[data-busy-select]:checked').forEach(ch=>{const t=available.find(x=>x.id===ch.dataset.busySelect),m=Number(document.querySelector(`[data-busy-minutes="${ch.dataset.busySelect}"]`).value);if(t&&Number.isInteger(m)&&m>0&&m<=1440)arr.push({sourceId:t.id,title:t.title,icon:t.icon||'📌',minutes:m,done:(busyPlans[activeDay]||[]).find(x=>x.sourceId===t.id)?.done||false})});busyPlans[activeDay]=arr;saveBusyPlans();updateBusyTotal();updateProgress()}
+function updateBusyTotal(){const total=(busyPlans[activeDay]||[]).reduce((s,x)=>s+(Number(x.minutes)||0),0);document.getElementById('busyTotal').textContent='مجموع زمان موردنیاز: '+fmtDuration(total)}
+function openCopyDialog(){const box=document.createElement('div');box.className='copy-dialog';box.id='copyDialog';box.innerHTML='<strong>برنامه '+activeDay+' در کدام روزها کپی شود؟</strong><div class="copy-days">'+DAYS.filter(x=>x[0]!==activeDay).map(([n])=>`<label><input type="checkbox" value="${n}"> ${n}</label>`).join('')+'</div><button class="manage-btn" id="confirmCopy">کپی جداگانه برنامه</button> <button class="manage-btn" id="cancelCopy">انصراف</button>';document.querySelector('.manage-row').after(box);document.getElementById('cancelCopy').onclick=()=>box.remove();document.getElementById('confirmCopy').onclick=()=>{const targets=[...box.querySelectorAll('input:checked')].map(x=>x.value);if(!targets.length){showToast('حداقل یک روز را انتخاب کن.');return}targets.forEach(n=>{schedules[n]=clone(schedules[activeDay])});if(saveSchedules()){box.remove();showToast('برنامه به‌صورت جداگانه در روزهای انتخاب‌شده کپی شد.')}}}
+function updateDailyMessage(){const d=new Date(),n=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);document.getElementById('dailyMessage').textContent=dailyMessages[((n%dailyMessages.length)+dailyMessages.length)%dailyMessages.length]}
+function updateClock(){const d=new Date();document.getElementById('liveClock').textContent=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',hour12:false}).format(d);document.getElementById('fullDate').textContent=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',day:'numeric',month:'long'}).format(d);document.getElementById('datePill').textContent=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'short'}).format(d);markCurrentTask(d);checkForNewDay()}
+function markCurrentTask(now){document.querySelectorAll('.task.current').forEach(x=>x.classList.remove('current'));const mins=now.getHours()*60+now.getMinutes();document.querySelectorAll('.task[data-start]').forEach(el=>{const [sh,sm]=el.dataset.start.split(':').map(Number),[eh,em]=el.dataset.end.split(':').map(Number),s=sh*60+sm,e=eh*60+em,active=e<s?(mins>=s||mins<e):(mins>=s&&mins<e);if(active)el.classList.add('current')})}
+function checkForNewDay(){const today=localDateKey();if(today===activeDateKey)return;activeDateKey=today;checks=loadChecks(today);const js=new Date().getDay();switchDay(DAYS.find(x=>x[1]===js)?.[0]||'شنبه');showToast('روز تازه شروع شد؛ تیک‌های روز جدید بارگذاری شدند.')}
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
+function openEditor(task,group){editingId=task?.id||null;document.getElementById('editorTitle').textContent=task?'ویرایش کار':'افزودن کار';document.getElementById('taskName').value=task?.title||'';document.getElementById('taskGroup').value=task?._group||group||'morning';document.getElementById('taskDuration').value=task?.minutes||30;document.getElementById('taskStart').value=task?.start||'';document.getElementById('taskPriority').value=task?.priority||'core';document.getElementById('taskKind').value=task?.kind||'main';document.getElementById('taskParallel').value=task?.parallel||'';document.getElementById('taskDesc').value=task?.desc||'';selectedIcon=task?.icon||'book';renderSelectedIcon();document.getElementById('customIconInput').value='';document.getElementById('deleteTask').hidden=!task;document.getElementById('iconSearch').value='';renderIconGrid();document.getElementById('editorBackdrop').classList.add('open');document.getElementById('taskName').focus()}
+function closeEditor(){document.getElementById('editorBackdrop').classList.remove('open')}
+function iconLabel(icon){return iconName(icon)}
+function renderSelectedIcon(){const el=document.getElementById('selectedIcon');el.innerHTML=iconSvg(selectedIcon);el.style.color=iconColor(selectedIcon);document.getElementById('selectedIconName').textContent=iconName(selectedIcon)}
+function renderIconGrid(){const q=document.getElementById('iconSearch').value.trim().toLowerCase(),grid=document.getElementById('iconGrid');grid.innerHTML='';const custom=loadCustomIcons();const all=[...iconLibrary,...custom.map((x,i)=>({id:x.id,label:x.label||'آیکون دلخواه',category:'دلخواه',color:x.color||'#b9c8d8',emoji:x.emoji}))];all.filter(x=>!q||x.label.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)||x.id.toLowerCase().includes(q)).forEach(item=>{const b=document.createElement('button');b.type='button';b.className='icon-choice'+(item.id===selectedIcon?' selected':'');b.style.setProperty('--choice-color',item.color);b.innerHTML=item.emoji?`<span class="emoji-icon">${escapeHTML(item.emoji)}</span><span>${escapeHTML(item.label)}</span>`:`${iconSvg(item.id)}<span>${escapeHTML(item.label)}</span>`;b.title=item.label;b.addEventListener('click',()=>{selectedIcon=item.id;renderSelectedIcon();renderIconGrid()});grid.appendChild(b)});if(!grid.children.length)grid.textContent='آیکونی پیدا نشد.'}
+function loadCustomIcons(){try{return JSON.parse(localStorage.getItem('routine-custom-icons-v1')||'[]')}catch(e){return []}}
+function saveCustomIcons(list){localStorage.setItem('routine-custom-icons-v1',JSON.stringify(list))}
+document.getElementById('addCustomIcon').addEventListener('click',()=>{const input=document.getElementById('customIconInput'),emoji=input.value.trim();if(!emoji){showToast('اول یک نشانه وارد کن.');return}const list=loadCustomIcons(),id='custom:'+emoji;if(!list.some(x=>x.id===id))list.push({id,emoji,label:'نشانه دلخواه',color:'#b9c8d8'});saveCustomIcons(list);selectedIcon=id;input.value='';renderSelectedIcon();renderIconGrid();showToast('نشانه به فهرست اضافه شد.')});
+document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('taskName').value.trim(),minutes=Number(document.getElementById('taskDuration').value);if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){showToast('نام و مدت کار را درست وارد کن.');return}const group=document.getElementById('taskGroup').value;let task=editingId?findTask(editingId):null;if(editingId){const old=task._group;schedules[activeDay][old]=schedules[activeDay][old].filter(x=>x.id!==editingId)}else task={id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};Object.assign(task,{title,minutes,start:document.getElementById('taskStart').value||'',end:'',time:'',duration:fmtDuration(minutes),icon:selectedIcon,priority:document.getElementById('taskPriority').value,kind:document.getElementById('taskKind').value,parallel:document.getElementById('taskParallel').value.trim(),desc:document.getElementById('taskDesc').value.trim()});schedules[activeDay][group].push(task);if(saveSchedules()){closeEditor();renderTasks();showToast('کار ذخیره شد.')}});
+document.getElementById('deleteTask').addEventListener('click',()=>{if(!editingId||!confirm('این کار از برنامه این روز حذف شود؟'))return;const t=findTask(editingId);schedules[activeDay][t._group]=schedules[activeDay][t._group].filter(x=>x.id!==editingId);saveSchedules();closeEditor();renderTasks();showToast('کار حذف شد.')});
+document.getElementById('cancelTask').addEventListener('click',closeEditor);document.getElementById('editorBackdrop').addEventListener('click',e=>{if(e.target.id==='editorBackdrop')closeEditor()});document.getElementById('iconSearch').addEventListener('input',renderIconGrid);
+document.getElementById('addFirstTask').addEventListener('click',()=>openEditor(null,'morning'));document.getElementById('copyPlanBtn').addEventListener('click',openCopyDialog);document.getElementById('busyViewBtn').addEventListener('click',()=>busyMode?showNormalView():showBusyView());document.getElementById('leaveBusyBtn').addEventListener('click',()=>{busyMode=false;showNormalView();updateProgress()});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(!confirm('همه تیک‌های برنامه زمان‌بندی‌شده امروز پاک شوند؟'))return;checks={};saveChecks();renderTasks();showToast('تیک‌های برنامه زمان‌بندی‌شده پاک شدند.')});
+document.querySelectorAll('.filters a').forEach(a=>a.addEventListener('click',()=>document.querySelectorAll('.filters a').forEach(x=>x.classList.toggle('active',x===a))));
+let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});document.getElementById('installBtn').addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else if(window.matchMedia('(display-mode: standalone)').matches)showToast('برنامه روی صفحه اصلی نصب شده است.');else showToast('برای نصب وب‌اپ، نسخه باید روی HTTPS باشد.')});
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+renderDays();renderTasks();updateDailyMessage();updateClock();setInterval(updateClock,30000);
+</script>
+</body>
+</html>

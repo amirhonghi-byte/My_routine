@@ -1,4 +1,4 @@
-
+ 
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -286,7 +286,7 @@
     <div class="profile-switch" id="daySelector" aria-label="انتخاب روز هفته"></div>
     <div class="manage-row"><small id="profileHint">برنامه مستقل این روز</small><button class="manage-btn" id="addFirstTask" type="button">＋ افزودن فعالیت</button></div>
     <div class="manage-row" style="margin-top:8px"><button class="manage-btn" id="copyPlanBtn" type="button">⧉ کپی برنامه این روز به روزهای دیگر</button><button class="manage-btn" id="busyViewBtn" type="button">فهرست روز شلوغ</button><button class="manage-btn danger" id="clearDayBtn" type="button">حذف همه کارهای این روز</button></div>
-    <nav class="filters" aria-label="رفتن به بخش‌های برنامه"><a class="filter active" href="#morning">صبح</a><a class="filter" href="#evening">عصر و شب</a></nav>
+    <nav class="filters" aria-label="رفتن به بخش‌های برنامه"><a class="filter active" href="#morning">صبح</a><a class="filter" href="#noon">ظهر</a><a class="filter" href="#evening">عصر</a><a class="filter" href="#night">شب</a></nav>
 
     <section id="busyPanel" class="section" hidden>
       <div class="section-head"><div class="section-title-wrap"><div class="section-title">فهرست منعطف روز شلوغ</div></div><div class="section-range">بدون ساعت‌بندی</div></div>
@@ -295,30 +295,24 @@
       <div class="flex-note" id="busyTotal">مجموع زمان: ۰ دقیقه</div>
       <button class="manage-btn" id="leaveBusyBtn" type="button">بازگشت به برنامه زمان‌بندی‌شده</button>
     </section>
-    <section class="section" id="morning" data-section="morning">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">صبح</div></div><div class="section-range">۰۶:۰۰ — ۱۷:۳۰</div></div>
-      <div class="section-card">
-        <div class="subgroup-label"><span>شروع روز</span><span>۰۶:۰۰ — ۰۹:۳۰</span></div>
-        <div id="morningTasks"></div>
-        <div class="subgroup-label"><span>کارآموزی · زمان آزاد شرکت</span><span>۲ ساعت و ۳۰ دقیقه</span></div>
-        <div id="workTasks"></div>
-        <div class="subgroup-label"><span>بازه استراحت شرکت</span><span>۴۵ دقیقه</span></div>
-        <div id="breakTasks"></div>
-      </div>
-      <div class="flex-note"><strong>مسیر رفت:</strong> یک ساعت مطالعه در مسیر در نظر گرفته شده؛ اگر امکان مطالعه نداشتی، می‌توانی از زمان جبرانی مسیر برگشت استفاده کنی.</div>
-      <div class="flex-note">در زمان آزاد شرکت، دو بلوک یک‌ساعته یادگیری مهارت اصلی را با ۱۵ دقیقه زبان و ۱۵ دقیقه تحقیقات سربازی و نخبگی انجام بده. ساعت دقیق فعالیت‌ها می‌تواند با شرایط شرکت جابه‌جا شود.</div>
+    <section class="section time-section" id="morning" data-section="morning">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">صبح</div></div><div class="section-range">۰۶:۰۰ — ۱۲:۰۰</div></div>
+      <div class="section-card"><div id="morningTasks"></div></div>
     </section>
 
-    <section class="section" id="evening" data-section="evening">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">عصر و شب</div></div><div class="section-range">۱۷:۳۰ — ۰۶:۰۰</div></div>
-      <div class="section-card">
-        <div class="subgroup-label"><span>مسیر برگشت</span><span>۱۷:۳۰ — ۱۹:۰۰</span></div>
-        <div id="returnTasks"></div>
-        <div class="subgroup-label"><span>برنامه عصر و شب</span><span>۱۹:۰۰ — ۰۶:۰۰</span></div>
-        <div id="eveningTasks"></div>
-      </div>
-      <div class="flex-note"><strong>زمان جبرانی عمومی:</strong> به‌جز ۱۵ دقیقه تمرین افزایش سرعت یادگیری، باقی مسیر برگشت برای جبران هر فعالیت عقب‌افتاده است؛ نه فقط درس. اگر کاری عقب نمانده، می‌توانی استراحت کنی.</div>
-      <div class="flex-note"><strong>یادآوری:</strong> مهارت اضطراری فعلاً از برنامه حذف شده و بازه ۲۱:۱۰ تا ۲۲:۳۰ برای زمان آزاد و ریکاوری است.</div>
+    <section class="section time-section" id="noon" data-section="noon">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">ظهر</div></div><div class="section-range">۱۲:۰۰ — ۱۶:۰۰</div></div>
+      <div class="section-card"><div id="noonTasks"></div></div>
+    </section>
+
+    <section class="section time-section" id="evening" data-section="evening">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">عصر</div></div><div class="section-range">۱۶:۰۰ — ۲۰:۰۰</div></div>
+      <div class="section-card"><div id="eveningTasks"></div></div>
+    </section>
+
+    <section class="section time-section" id="night" data-section="night">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">شب</div></div><div class="section-range">۲۰:۰۰ — ۰۶:۰۰</div></div>
+      <div class="section-card"><div id="nightTasks"></div></div>
     </section>
 
     <footer class="footer">
@@ -332,7 +326,7 @@
       <h2 id="editorTitle">افزودن فعالیت</h2>
       <div class="editor-grid">
         <label class="full">نام فعالیت<input id="taskName" maxlength="70" required placeholder="مثلاً مطالعه پایتون"></label>
-        <label>بخش روز<select id="taskGroup"><option value="morning">صبح</option><option value="work">زمان آزاد شرکت</option><option value="breaks">استراحت شرکت</option><option value="returning">مسیر برگشت</option><option value="evening">عصر و شب</option></select></label>
+        <label>بازه روز (برای فعالیت بدون ساعت)<select id="taskGroup"><option value="morning">صبح</option><option value="noon">ظهر</option><option value="evening">عصر</option><option value="night">شب</option></select></label>
         <label>مدت (دقیقه)<input id="taskDuration" type="number" min="1" max="1440" value="30" required></label>
         <label>ساعت شروع (اختیاری)<input id="taskStart" type="time"></label>
         <label>نوع فعالیت<select id="taskPriority"><option value="core">اصلی / ضروری</option><option value="supporting">پشتیبان / قابل‌حذف در روز شلوغ</option></select></label>
@@ -343,7 +337,7 @@
       </div>
       <div class="icon-tools"><input id="iconSearch" type="search" placeholder="جست‌وجوی آیکون یا دسته‌بندی..."><span class="editor-note">مخزن آیکون‌ها</span></div>
       <div class="icon-grid" id="iconGrid" aria-label="انتخاب آیکون"></div>
-      <p class="editor-note">اگر ساعت شروع را خالی بگذاری، فقط مدت فعالیت نمایش داده می‌شود. ساعت پایان از روی مدت محاسبه می‌شود.</p>
+      <p class="editor-note">با تعیین ساعت شروع، فعالیت خودکار در بخش زمانی درست قرار می‌گیرد. اگر ساعت را خالی بگذاری، بازه انتخاب‌شده ملاک نمایش است.</p>
       <div class="editor-actions"><button class="delete" id="deleteTask" type="button" hidden>حذف فعالیت</button><span style="flex:1"></span><button id="cancelTask" type="button">انصراف</button><button class="save" type="submit">ذخیره فعالیت</button></div>
     </form>
   </div>
@@ -455,12 +449,37 @@ function iconSvg(icon){const custom=loadCustomIconsSafe().find(x=>x.id===icon);i
 function loadCustomIconsSafe(){try{return JSON.parse(localStorage.getItem('routine-custom-icons-v1')||'[]')}catch(e){return []}}
 function iconColor(icon){return iconLibrary.find(x=>x.id===icon)?.color||'#b9c8d8'}
 function iconName(icon){return iconLibrary.find(x=>x.id===icon)?.label||'آیکون دلخواه'}
-const groupNames={morning:'شروع روز',work:'زمان آزاد شرکت',breaks:'استراحت شرکت',returning:'مسیر برگشت',evening:'برنامه عصر و شب'};
+const groupNames={morning:'صبح',noon:'ظهر',evening:'عصر',night:'شب'};
+const LEGACY_GROUP_FALLBACK={work:'noon',breaks:'noon',returning:'evening'};
+function dayPartForTime(start){
+ const match=/^(?:[01]\d|2[0-3]):[0-5]\d$/.exec(String(start||''));
+ if(!match)return null;
+ const [h,m]=start.split(':').map(Number),minutes=h*60+m;
+ if(minutes>=360&&minutes<720)return 'morning';
+ if(minutes>=720&&minutes<960)return 'noon';
+ if(minutes>=960&&minutes<1200)return 'evening';
+ return 'night';
+}
 const dailyMessages=['پیشرفت واقعی از کارهای کوچک و پیوسته ساخته می‌شود.','لازم نیست سریع‌ترین باشی؛ فقط پیوستگی را حفظ کن.','امروز را با قدم بعدی بساز، نه با نگرانی درباره کل مسیر.','تمرکز روی کار مهم، بهتر از شلوغ‌کردن فهرست کارهاست.','استراحت بخشی از مسیر پیشرفت است، نه نقطه مقابل آن.'];
 const clone=x=>JSON.parse(JSON.stringify(x));
 function freshSchedule(){return normalizeSchedule(clone(baseGroups))}
-function normalizeSchedule(x){const out={};for(const g of Object.keys(groupNames))out[g]=Array.isArray(x?.[g])?x[g].map(t=>({...t,icon:iconForTitle(t.title,t.icon)})):[];return out}
-function hasScheduleShape(x){return !!x&&typeof x==='object'&&Object.keys(groupNames).some(g=>Array.isArray(x[g]))}
+function normalizeSchedule(x){
+ const out={};for(const g of Object.keys(groupNames))out[g]=[];
+ if(!x||typeof x!=='object')return out;
+ for(const [sourceGroup,tasks] of Object.entries(x)){
+   if(!Array.isArray(tasks))continue;
+   for(const original of tasks){
+     if(!original||typeof original!=='object')continue;
+     const task={...original,icon:iconForTitle(original.title,original.icon)};
+     const fallback=groupNames[sourceGroup]?sourceGroup:(LEGACY_GROUP_FALLBACK[sourceGroup]||'morning');
+     const destination=dayPartForTime(task.start)||fallback;
+     out[destination].push(task);
+   }
+ }
+ for(const part of Object.keys(groupNames))out[part]=sortTaskListByStart(out[part],part);
+ return out;
+}
+function hasScheduleShape(x){return !!x&&typeof x==='object'&&['morning','noon','evening','night','work','breaks','returning'].some(g=>Array.isArray(x[g]))}
 function backupRaw(key,value){try{const stamp=new Date().toISOString().replace(/[:.]/g,'-');localStorage.setItem(BACKUP_PREFIX+stamp,JSON.stringify({source:key,savedAt:new Date().toISOString(),value:JSON.parse(value)}));}catch(e){}}
 function loadSchedules(){
  const candidates=[STORAGE_SCHEDULE,...LEGACY_KEYS];
@@ -511,20 +530,23 @@ function localDateKey(){const d=new Date();return [d.getFullYear(),String(d.getM
 function storageKey(k){return 'daily-routine-checks-v2-'+k}
 function loadChecks(k){try{const a=localStorage.getItem(storageKey(k));if(a)return JSON.parse(a);const b=localStorage.getItem('daily-routine-checks-v1-'+k);if(b){localStorage.setItem(storageKey(k),b);return JSON.parse(b)}return {}}catch(e){return {}}}
 function saveChecks(){try{localStorage.setItem(storageKey(activeDateKey),JSON.stringify(checks))}catch(e){showToast('ذخیره‌سازی تیک‌ها ناموفق بود.')}updateProgress()}
-function sortTaskListByStart(tasks){
-  // مرتب‌سازی پایدار: ساعت‌دارها از زود به دیر؛ بدون ساعت‌ها در انتها.
-  return tasks.map((task,index)=>({task,index,minutes:/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(task.start||'')?Number(task.start.slice(0,2))*60+Number(task.start.slice(3,5)):Infinity}))
-    .sort((a,b)=>a.minutes-b.minutes||a.index-b.index)
-    .map(item=>item.task);
+function sortTaskListByStart(tasks,part=''){
+  // مرتب‌سازی بر اساس ساعت؛ در بخش شب، ساعت‌های بعد از نیمه‌شب پس از ۲۲:۳۰ قرار می‌گیرند.
+  return tasks.map((task,index)=>{
+    const valid=/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(task.start||'');
+    let minutes=valid?Number(task.start.slice(0,2))*60+Number(task.start.slice(3,5)):Infinity;
+    if(valid&&part==='night'&&minutes<360)minutes+=1440;
+    return {task,index,minutes};
+  }).sort((a,b)=>a.minutes-b.minutes||a.index-b.index).map(item=>item.task);
 }
 function sortAllSchedules(){
   for(const day of Object.keys(schedules||{})){
     for(const group of Object.keys(groupNames)){
-      if(Array.isArray(schedules[day]?.[group])) schedules[day][group]=sortTaskListByStart(schedules[day][group]);
+      if(Array.isArray(schedules[day]?.[group])) schedules[day][group]=sortTaskListByStart(schedules[day][group],group);
     }
   }
 }
-function saveSchedules(){if(storageBlocked){showToast('ذخیره متوقف شد؛ دادهٔ ناشناخته‌ای پیدا شده و برای جلوگیری از بازنویسی، باید پشتیبان بررسی شود.');return false}try{const previous=localStorage.getItem(STORAGE_SCHEDULE);if(previous)backupRaw(STORAGE_SCHEDULE,previous);localStorage.setItem(STORAGE_SCHEDULE,JSON.stringify({schema:3,days:schedules}));return true}catch(e){showToast('ذخیره برنامه ناموفق بود؛ فضای ذخیره‌سازی را بررسی کن.');return false}}
+function saveSchedules(){if(storageBlocked){showToast('ذخیره متوقف شد؛ دادهٔ ناشناخته‌ای پیدا شده و برای جلوگیری از بازنویسی، باید پشتیبان بررسی شود.');return false}try{const previous=localStorage.getItem(STORAGE_SCHEDULE);if(previous)backupRaw(STORAGE_SCHEDULE,previous);localStorage.setItem(STORAGE_SCHEDULE,JSON.stringify({schema:4,days:schedules}));return true}catch(e){showToast('ذخیره برنامه ناموفق بود؛ فضای ذخیره‌سازی را بررسی کن.');return false}}
 function loadBusyPlans(){try{return JSON.parse(localStorage.getItem('routine-busy-plans-v1')||'{}')}catch(e){return {}}}
 function saveBusyPlans(){try{localStorage.setItem('routine-busy-plans-v1',JSON.stringify(busyPlans))}catch(e){showToast('ذخیره فهرست روز شلوغ ناموفق بود.')}}
 function fa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])}
@@ -534,7 +556,7 @@ function timeLabel(t){return t.start&&Number.isFinite(Number(t.minutes))?fa(t.st
 function colorFor(icon){return iconColor(icon)}
 function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${fmtDuration(t.minutes||0)}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button><button type="button" class="drag-handle" aria-label="نگه دار و برای جابه‌جایی بکش" title="برای جابه‌جایی نگه دار و بکش"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h.01M11 3h.01M5 8h.01M11 8h.01M5 13h.01M11 13h.01" stroke-width="3"/></svg></button></span></div>`}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-const targetIds={morning:'morningTasks',work:'workTasks',breaks:'breakTasks',returning:'returnTasks',evening:'eveningTasks'};
+const targetIds={morning:'morningTasks',noon:'noonTasks',evening:'eveningTasks',night:'nightTasks'};
 function renderDays(){const el=document.getElementById('daySelector');el.innerHTML='';DAYS.forEach(([name])=>{const b=document.createElement('button');b.type='button';b.className='profile-btn'+(name===activeDay?' active':'');b.textContent=name;b.addEventListener('click',()=>switchDay(name));el.appendChild(b)})}
 function renderTasks(){groups=schedules[activeDay];allTasks=Object.values(groups).flat();for(const key of Object.keys(groupNames)){const el=document.getElementById(targetIds[key]),arr=groups[key]||[];el.innerHTML=arr.map(taskHTML).join('')+(arr.length?'':'<div class="empty-group">هنوز فعالیتی در این بخش ثبت نشده است.</div>')+`<button type="button" class="add-task-btn" data-add="${key}">＋ افزودن فعالیت به ${groupNames[key]}</button>`}
 document.querySelectorAll('.check').forEach(i=>i.addEventListener('change',e=>{checks[e.target.dataset.id]=e.target.checked;saveChecks()}));document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEditor(findTask(b.dataset.edit))));document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>openEditor(null,b.dataset.add)));document.body.classList.remove('priority-mode');updateProgress();markCurrentTask(new Date())}
@@ -550,8 +572,8 @@ document.addEventListener('pointercancel',e=>{if(dragState&&e.pointerId===dragSt
 function findTask(id){for(const [g,a] of Object.entries(groups)){const t=a.find(x=>x.id===id);if(t)return {...t,_group:g}}return null}
 function updateProgress(){const relevant=busyMode?(busyPlans[activeDay]||[]):allTasks;const done=relevant.filter(t=>busyMode?!!t.done:!!checks[t.id]).length,total=relevant.length,pct=total?Math.round(done/total*100):0;document.getElementById('percent').textContent=fa(pct)+'٪';document.getElementById('progressCaption').textContent=total?`${fa(done)} از ${fa(total)} فعالیت انجام شده`:'برای این روز هنوز فعالیتی تعریف نشده است';document.getElementById('progressBar').style.width=pct+'%';document.getElementById('ringValue').style.strokeDashoffset=176-176*pct/100;document.getElementById('progressTitle').textContent=total?(done===total?'فهرست امروز کامل شد 🎉':busyMode?'فهرست روز شلوغ فعال است':done?'ادامه بده؛ خوب پیش می‌روی':'شروع روز'):'برنامه‌ات را بساز'}
 function switchDay(name){activeDay=name;busyMode=false;renderDays();renderTasks();showNormalView();document.getElementById('profileHint').textContent='برنامه مستقل '+name;}
-function showNormalView(){document.getElementById('busyPanel').hidden=true;document.querySelectorAll('#morning,#evening').forEach(x=>x.hidden=false);document.querySelector('.filters').hidden=false;document.getElementById('addFirstTask').hidden=false;document.getElementById('copyPlanBtn').hidden=false;document.getElementById('busyViewBtn').textContent='فهرست روز شلوغ'}
-function showBusyView(){busyMode=true;document.querySelectorAll('#morning,#evening').forEach(x=>x.hidden=true);document.querySelector('.filters').hidden=true;document.getElementById('addFirstTask').hidden=true;document.getElementById('copyPlanBtn').hidden=true;document.getElementById('busyPanel').hidden=false;document.getElementById('busyViewBtn').textContent='نمایش برنامه زمان‌بندی‌شده';renderBusyChoices();updateProgress()}
+function showNormalView(){document.getElementById('busyPanel').hidden=true;document.querySelectorAll('.time-section').forEach(x=>x.hidden=false);document.querySelector('.filters').hidden=false;document.getElementById('addFirstTask').hidden=false;document.getElementById('copyPlanBtn').hidden=false;document.getElementById('busyViewBtn').textContent='فهرست روز شلوغ'}
+function showBusyView(){busyMode=true;document.querySelectorAll('.time-section').forEach(x=>x.hidden=true);document.querySelector('.filters').hidden=true;document.getElementById('addFirstTask').hidden=true;document.getElementById('copyPlanBtn').hidden=true;document.getElementById('busyPanel').hidden=false;document.getElementById('busyViewBtn').textContent='نمایش برنامه زمان‌بندی‌شده';renderBusyChoices();updateProgress()}
 function renderBusyChoices(){const chosen=busyPlans[activeDay]||[],selected=new Map(chosen.map(x=>[x.sourceId,x]));const available=Object.values(schedules[activeDay]).flat();const box=document.getElementById('busyChoices');box.innerHTML=available.map(t=>{const v=selected.get(t.id);return `<div class="busy-row"><input type="checkbox" aria-label="انتخاب فعالیت" data-busy-select="${t.id}" ${v?'checked':''}><span>${escapeHTML(t.title)}</span><input type="number" min="1" max="1440" step="1" aria-label="مدت دقیقه" data-busy-minutes="${t.id}" value="${v?.minutes??t.minutes??30}" ${v?'':'disabled'}><input type="checkbox" aria-label="انجام شد" data-busy-done="${t.id}" ${v?.done?'checked':''} ${v?'':'disabled'}></div>`}).join('')||'<p>ابتدا در برنامه این روز فعالیتی اضافه کن.</p>';box.querySelectorAll('[data-busy-select]').forEach(ch=>ch.addEventListener('change',()=>{const input=box.querySelector(`[data-busy-minutes="${ch.dataset.busySelect}"]`);input.disabled=!ch.checked;const done=box.querySelector(`[data-busy-done="${ch.dataset.busySelect}"]`);done.disabled=!ch.checked;saveBusyFromUI()}));box.querySelectorAll('[data-busy-minutes]').forEach(inp=>inp.addEventListener('change',saveBusyFromUI));box.querySelectorAll('[data-busy-minutes]').forEach(inp=>inp.addEventListener('input',updateBusyTotal));box.querySelectorAll('[data-busy-done]').forEach(ch=>ch.addEventListener('change',()=>{const item=(busyPlans[activeDay]||[]).find(x=>x.sourceId===ch.dataset.busyDone);if(item){item.done=ch.checked;saveBusyPlans();updateProgress()}}));updateBusyTotal()}
 function saveBusyFromUI(){const available=Object.values(schedules[activeDay]).flat(),arr=[];document.querySelectorAll('[data-busy-select]:checked').forEach(ch=>{const t=available.find(x=>x.id===ch.dataset.busySelect),m=Number(document.querySelector(`[data-busy-minutes="${ch.dataset.busySelect}"]`).value);if(t&&Number.isInteger(m)&&m>0&&m<=1440)arr.push({sourceId:t.id,title:t.title,icon:t.icon||'spark',minutes:m,done:(busyPlans[activeDay]||[]).find(x=>x.sourceId===t.id)?.done||false})});busyPlans[activeDay]=arr;saveBusyPlans();updateBusyTotal();updateProgress()}
 function updateBusyTotal(){const total=(busyPlans[activeDay]||[]).reduce((s,x)=>s+(Number(x.minutes)||0),0);document.getElementById('busyTotal').textContent='مجموع زمان موردنیاز: '+fmtDuration(total)}
@@ -561,11 +583,12 @@ function updateClock(){const d=new Date();document.getElementById('liveClock').t
 function markCurrentTask(now){document.querySelectorAll('.task.current').forEach(x=>x.classList.remove('current'));const mins=now.getHours()*60+now.getMinutes();document.querySelectorAll('.task[data-start]').forEach(el=>{const [sh,sm]=el.dataset.start.split(':').map(Number),[eh,em]=el.dataset.end.split(':').map(Number),s=sh*60+sm,e=eh*60+em,active=e<s?(mins>=s||mins<e):(mins>=s&&mins<e);if(active)el.classList.add('current')})}
 function checkForNewDay(){const today=localDateKey();if(today===activeDateKey)return;activeDateKey=today;checks=loadChecks(today);const js=new Date().getDay();switchDay(DAYS.find(x=>x[1]===js)?.[0]||'شنبه');showToast('روز تازه شروع شد؛ تیک‌های روز جدید بارگذاری شدند.')}
 function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
-function openEditor(task,group){editingId=task?.id||null;document.getElementById('editorTitle').textContent=task?'ویرایش فعالیت':'افزودن فعالیت';document.getElementById('taskName').value=task?.title||'';document.getElementById('taskGroup').value=task?._group||group||'morning';document.getElementById('taskDuration').value=task?.minutes||30;document.getElementById('taskStart').value=task?.start||'';document.getElementById('taskPriority').value=task?.priority||'core';document.getElementById('taskKind').value=task?.kind||'main';document.getElementById('taskParallel').value=task?.parallel||'';document.getElementById('taskDesc').value=task?.desc||'';selectedIcon=iconForTitle(task?.title||'',task?.icon||'book');renderSelectedIcon();document.getElementById('deleteTask').hidden=!task;document.getElementById('iconSearch').value='';renderIconGrid();document.getElementById('editorBackdrop').classList.add('open');document.getElementById('taskName').focus()}
+function openEditor(task,group){editingId=task?.id||null;document.getElementById('editorTitle').textContent=task?'ویرایش فعالیت':'افزودن فعالیت';document.getElementById('taskName').value=task?.title||'';document.getElementById('taskGroup').value=(task?.start&&dayPartForTime(task.start))||task?._group||group||'morning';document.getElementById('taskDuration').value=task?.minutes||30;document.getElementById('taskStart').value=task?.start||'';document.getElementById('taskPriority').value=task?.priority||'core';document.getElementById('taskKind').value=task?.kind||'main';document.getElementById('taskParallel').value=task?.parallel||'';document.getElementById('taskDesc').value=task?.desc||'';selectedIcon=iconForTitle(task?.title||'',task?.icon||'book');renderSelectedIcon();document.getElementById('deleteTask').hidden=!task;document.getElementById('iconSearch').value='';renderIconGrid();document.getElementById('editorBackdrop').classList.add('open');document.getElementById('taskName').focus()}
 function closeEditor(){document.getElementById('editorBackdrop').classList.remove('open')}
 function renderSelectedIcon(){const el=document.getElementById('selectedIcon');el.innerHTML=iconSvg(selectedIcon);el.style.color=iconColor(selectedIcon);document.getElementById('selectedIconName').textContent=iconName(selectedIcon)}
 function renderIconGrid(){const q=document.getElementById('iconSearch').value.trim().toLowerCase(),grid=document.getElementById('iconGrid');grid.innerHTML='';iconLibrary.filter(x=>!q||x.label.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)).forEach(item=>{const b=document.createElement('button');b.type='button';b.className='icon-choice'+(item.id===selectedIcon?' selected':'');b.style.setProperty('--choice-color',item.color);b.innerHTML=iconSvg(item.id)+`<span>${escapeHTML(item.label)}</span>`;b.title=item.label;b.addEventListener('click',()=>{selectedIcon=item.id;renderSelectedIcon();renderIconGrid()});grid.appendChild(b)});if(!grid.children.length)grid.textContent='آیکونی پیدا نشد.'}
-document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('taskName').value.trim(),minutes=Number(document.getElementById('taskDuration').value);if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){showToast('نام و مدت فعالیت را درست وارد کن.');return}const group=document.getElementById('taskGroup').value;let task=editingId?findTask(editingId):null,oldGroup=null,oldIndex=-1;if(editingId){oldGroup=task._group;oldIndex=schedules[activeDay][oldGroup].findIndex(x=>x.id===editingId);schedules[activeDay][oldGroup].splice(oldIndex,1)}else task={id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};Object.assign(task,{title,minutes,start:document.getElementById('taskStart').value||'',end:'',time:'',duration:fmtDuration(minutes),icon:selectedIcon,priority:document.getElementById('taskPriority').value,kind:document.getElementById('taskKind').value,parallel:document.getElementById('taskParallel').value.trim(),desc:document.getElementById('taskDesc').value.trim()});if(editingId&&oldGroup===group&&oldIndex>=0)schedules[activeDay][group].splice(Math.min(oldIndex,schedules[activeDay][group].length),0,task);else schedules[activeDay][group].push(task);if(saveSchedules()){closeEditor();renderTasks();showToast('فعالیت ذخیره شد.')}});
+document.getElementById('taskStart').addEventListener('change',e=>{const part=dayPartForTime(e.target.value);if(part)document.getElementById('taskGroup').value=part;});
+document.getElementById('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('taskName').value.trim(),minutes=Number(document.getElementById('taskDuration').value),start=document.getElementById('taskStart').value||'';if(!title||!Number.isInteger(minutes)||minutes<1||minutes>1440){showToast('نام و مدت فعالیت را درست وارد کن.');return}const group=dayPartForTime(start)||document.getElementById('taskGroup').value;let task=editingId?findTask(editingId):null,oldGroup=null,oldIndex=-1,oldStart='';if(editingId){if(!task){showToast('فعالیت پیدا نشد؛ فهرست را دوباره باز کن.');return}oldGroup=task._group;oldStart=task.start||'';oldIndex=schedules[activeDay][oldGroup].findIndex(x=>x.id===editingId);if(oldIndex>=0)schedules[activeDay][oldGroup].splice(oldIndex,1)}else task={id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)};Object.assign(task,{title,minutes,start,end:'',time:'',duration:fmtDuration(minutes),icon:selectedIcon,priority:document.getElementById('taskPriority').value,kind:document.getElementById('taskKind').value,parallel:document.getElementById('taskParallel').value.trim(),desc:document.getElementById('taskDesc').value.trim()});if(editingId&&oldGroup===group&&oldIndex>=0&&oldStart===start)schedules[activeDay][group].splice(Math.min(oldIndex,schedules[activeDay][group].length),0,task);else{schedules[activeDay][group].push(task);schedules[activeDay][group]=sortTaskListByStart(schedules[activeDay][group],group)}if(saveSchedules()){closeEditor();renderTasks();showToast('فعالیت ذخیره شد.')}});
 document.getElementById('deleteTask').addEventListener('click',()=>{if(!editingId||!confirm('این فعالیت از برنامه این روز حذف شود؟'))return;const t=findTask(editingId);schedules[activeDay][t._group]=schedules[activeDay][t._group].filter(x=>x.id!==editingId);saveSchedules();closeEditor();renderTasks();showToast('فعالیت حذف شد.')});
 document.getElementById('cancelTask').addEventListener('click',closeEditor);document.getElementById('editorBackdrop').addEventListener('click',e=>{if(e.target.id==='editorBackdrop')closeEditor()});document.getElementById('iconSearch').addEventListener('input',renderIconGrid);
 document.getElementById('addFirstTask').addEventListener('click',()=>openEditor(null,'morning'));
@@ -599,7 +622,7 @@ function clearCurrentDayNow(){
 window.clearCurrentDayNow=clearCurrentDayNow;
 document.getElementById('clearDayBtn').addEventListener('click',clearCurrentDayNow);
 document.getElementById('copyPlanBtn').addEventListener('click',openCopyDialog);document.getElementById('busyViewBtn').addEventListener('click',()=>busyMode?showNormalView():showBusyView());document.getElementById('leaveBusyBtn').addEventListener('click',()=>{busyMode=false;showNormalView();updateProgress()});
-document.getElementById('backupBtn').addEventListener('click',()=>{const payload={app:'routine-dashboard',version:3,createdAt:new Date().toISOString(),schedules,busyPlans,checks,activeDay};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='routine-backup-'+localDateKey()+'.json';a.click();URL.revokeObjectURL(url);showToast('نسخه پشتیبان دانلود شد.')});
+document.getElementById('backupBtn').addEventListener('click',()=>{const payload={app:'routine-dashboard',version:4,createdAt:new Date().toISOString(),schedules,busyPlans,checks,activeDay};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='routine-backup-'+localDateKey()+'.json';a.click();URL.revokeObjectURL(url);showToast('نسخه پشتیبان دانلود شد.')});
 document.getElementById('resetBtn').addEventListener('click',()=>{if(!confirm('همه تیک‌های برنامه زمان‌بندی‌شده امروز پاک شوند؟'))return;checks={};saveChecks();renderTasks();showToast('تیک‌های برنامه زمان‌بندی‌شده پاک شدند.')});
 document.querySelectorAll('.filters a').forEach(a=>a.addEventListener('click',()=>document.querySelectorAll('.filters a').forEach(x=>x.classList.toggle('active',x===a))));
 let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});document.getElementById('installBtn').addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else if(window.matchMedia('(display-mode: standalone)').matches)showToast('برنامه روی صفحه اصلی نصب شده است.');else showToast('برای نصب وب‌اپ، نسخه باید روی HTTPS باشد.')});

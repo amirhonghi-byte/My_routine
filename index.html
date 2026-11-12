@@ -1,4 +1,4 @@
- 
+  
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -83,6 +83,8 @@
     .section:nth-of-type(2) .section-icon { background:rgba(232,197,138,.10);color:var(--gold); }
     .section:nth-of-type(3) .section-icon { background:rgba(192,166,242,.10);color:var(--purple); }
     .section:nth-of-type(4) .section-icon { background:rgba(113,223,193,.10);color:var(--accent); }
+    .section.time-section[data-section="morning"] .section-icon { background:rgba(142,185,250,.10);color:var(--blue); }
+    .section.time-section[data-section="afternoon"] .section-icon { background:rgba(192,166,242,.10);color:var(--purple); }
     .section-title { font-size:14px;font-weight:800; }
     .section-range { font-size:10px;color:var(--muted);direction:ltr; }
     .section-card { background:linear-gradient(160deg,rgba(20,34,53,.96),rgba(15,26,42,.98)); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
@@ -286,7 +288,7 @@
     <div class="profile-switch" id="daySelector" aria-label="انتخاب روز هفته"></div>
     <div class="manage-row"><small id="profileHint">برنامه مستقل این روز</small><button class="manage-btn" id="addFirstTask" type="button">＋ افزودن فعالیت</button></div>
     <div class="manage-row" style="margin-top:8px"><button class="manage-btn" id="copyPlanBtn" type="button">⧉ کپی برنامه این روز به روزهای دیگر</button><button class="manage-btn" id="busyViewBtn" type="button">فهرست روز شلوغ</button><button class="manage-btn danger" id="clearDayBtn" type="button">حذف همه کارهای این روز</button></div>
-    <nav class="filters" aria-label="رفتن به بخش‌های برنامه"><a class="filter active" href="#morning">صبح</a><a class="filter" href="#noon">ظهر</a><a class="filter" href="#evening">عصر</a><a class="filter" href="#night">شب</a></nav>
+    <nav class="filters" aria-label="رفتن به بخش‌های برنامه"><a class="filter active" href="#morning">قبل از ظهر</a><a class="filter" href="#afternoon">عصر و شب</a></nav>
 
     <section id="busyPanel" class="section" hidden>
       <div class="section-head"><div class="section-title-wrap"><div class="section-title">فهرست منعطف روز شلوغ</div></div><div class="section-range">بدون ساعت‌بندی</div></div>
@@ -296,23 +298,13 @@
       <button class="manage-btn" id="leaveBusyBtn" type="button">بازگشت به برنامه زمان‌بندی‌شده</button>
     </section>
     <section class="section time-section" id="morning" data-section="morning">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">صبح</div></div><div class="section-range">۰۶:۰۰ — ۱۲:۰۰</div></div>
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">قبل از ظهر</div></div><div class="section-range">۰۶:۰۰ — ۱۲:۰۰</div></div>
       <div class="section-card"><div id="morningTasks"></div></div>
     </section>
 
-    <section class="section time-section" id="noon" data-section="noon">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">ظهر</div></div><div class="section-range">۱۲:۰۰ — ۱۶:۰۰</div></div>
-      <div class="section-card"><div id="noonTasks"></div></div>
-    </section>
-
-    <section class="section time-section" id="evening" data-section="evening">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-sun"/></svg></div><div class="section-title">عصر</div></div><div class="section-range">۱۶:۰۰ — ۲۰:۰۰</div></div>
-      <div class="section-card"><div id="eveningTasks"></div></div>
-    </section>
-
-    <section class="section time-section" id="night" data-section="night">
-      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">شب</div></div><div class="section-range">۲۰:۰۰ — ۰۶:۰۰</div></div>
-      <div class="section-card"><div id="nightTasks"></div></div>
+    <section class="section time-section" id="afternoon" data-section="afternoon">
+      <div class="section-head"><div class="section-title-wrap"><div class="section-icon"><svg><use href="#i-moon"/></svg></div><div class="section-title">عصر و شب</div></div><div class="section-range">۱۲:۰۰ — ۰۶:۰۰</div></div>
+      <div class="section-card"><div id="afternoonTasks"></div></div>
     </section>
 
     <footer class="footer">
@@ -326,7 +318,7 @@
       <h2 id="editorTitle">افزودن فعالیت</h2>
       <div class="editor-grid">
         <label class="full">نام فعالیت<input id="taskName" maxlength="70" required placeholder="مثلاً مطالعه پایتون"></label>
-        <label>بازه روز (برای فعالیت بدون ساعت)<select id="taskGroup"><option value="morning">صبح</option><option value="noon">ظهر</option><option value="evening">عصر</option><option value="night">شب</option></select></label>
+        <label>بازه روز (برای فعالیت بدون ساعت)<select id="taskGroup"><option value="morning">قبل از ظهر</option><option value="afternoon">عصر و شب</option></select></label>
         <label>مدت (دقیقه)<input id="taskDuration" type="number" min="1" max="1440" value="30" required></label>
         <label>ساعت شروع (اختیاری)<input id="taskStart" type="time"></label>
         <label>نوع فعالیت<select id="taskPriority"><option value="core">اصلی / ضروری</option><option value="supporting">پشتیبان / قابل‌حذف در روز شلوغ</option></select></label>
@@ -348,6 +340,7 @@ const STORAGE_SCHEDULE='routine-schedules-manual-v2';
 const LEGACY_KEYS=['routine-schedules-manual-v1','routine-schedules-manual-v1-legacy-backup','routine-schedules-v1','routine-schedules'];
 const BACKUP_PREFIX='routine-auto-backup-';
 let storageBlocked=false;
+let scheduleNeedsMigration=false;
 const DAYS=[['شنبه',6],['یکشنبه',0],['دوشنبه',1],['سه‌شنبه',2],['چهارشنبه',3],['پنجشنبه',4],['جمعه',5]];
     const baseGroups={
       morning:[
@@ -356,19 +349,15 @@ const DAYS=[['شنبه',6],['یکشنبه',0],['دوشنبه',1],['سه‌شنب
         {id:'m3',time:'۰۷:۴۵–۰۸:۰۰',title:'زمان آزاد',desc:'فرصت کوتاه برای آماده‌شدن و راه‌افتادن',icon:'🕒',duration:'۱۵ دقیقه',start:'07:45',end:'08:00',minutes:15,priority:'supporting'},
         {id:'m4',time:'۰۸:۰۰–۰۹:۳۰',title:'مسیر رفت + مطالعه',desc:'یک ساعت مطالعه در مسیر رفت؛ اگر شرایط مناسب نبود، از زمان جبرانی مسیر برگشت استفاده کن.',icon:'🚌',duration:'۹۰ دقیقه',start:'08:00',end:'09:30',minutes:90,priority:'core'}
       ],
-      work:[
+      afternoon:[
         {id:'w1',time:'',title:'یادگیری مهارت اصلی',desc:'بلوک اول',icon:'📚',duration:'۶۰ دقیقه',minutes:60,kind:'main',priority:'core'},
         {id:'w2',time:'',title:'زبان',desc:'مطالعه یا تمرین زبان',icon:'🌐',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'},
         {id:'w3',time:'',title:'یادگیری مهارت اصلی',desc:'بلوک دوم',icon:'📚',duration:'۶۰ دقیقه',minutes:60,kind:'main',priority:'core'},
-        {id:'w4',time:'',title:'تحقیقات سربازی و نخبگی',desc:'پیگیری اطلاعات، قوانین و فرصت‌ها',icon:'🚩',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}
-      ],
-      breaks:[
+        {id:'w4',time:'',title:'تحقیقات سربازی و نخبگی',desc:'پیگیری اطلاعات، قوانین و فرصت‌ها',icon:'🚩',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'},
         {id:'b1',time:'',title:'ناهار',desc:'وعده کامل ناهار',icon:'🍽️',duration:'۱۵ دقیقه',minutes:15,priority:'core'},
         {id:'b2',time:'',title:'چرت ظهر',desc:'زمان کوتاه برای خواب و بیدارشدن',icon:'🛏️',duration:'۱۵ دقیقه',minutes:15,priority:'core'},
-        {id:'b3',time:'',title:'تمرین هوش کلامی',desc:'تمرین کوتاه روزانه',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}
-      ],
-      returning:[{id:'r1',time:'در مسیر',title:'تمرین افزایش سرعت یادگیری',desc:'فعالیت ثابت مسیر برگشت',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'}],
-      evening:[
+        {id:'b3',time:'',title:'تمرین هوش کلامی',desc:'تمرین کوتاه روزانه',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'},
+        {id:'r1',time:'در مسیر',title:'تمرین افزایش سرعت یادگیری',desc:'فعالیت ثابت مسیر برگشت',icon:'🧠',duration:'۱۵ دقیقه',minutes:15,kind:'parallel',priority:'supporting'},
         {id:'e1',time:'۱۹:۰۰–۱۹:۱۰',title:'استراحت و آماده‌شدن برای باشگاه',desc:'آماده‌شدن برای شروع تمرین',icon:'🕒',duration:'۱۰ دقیقه',start:'19:00',end:'19:10',minutes:10,priority:'core'},
         {id:'e2',time:'۱۹:۱۰–۲۰:۱۰',title:'بدنسازی',desc:'جلسه تمرین باشگاه',icon:'🏋️',duration:'۱ ساعت',start:'19:10',end:'20:10',minutes:60,priority:'core'},
         {id:'e3',time:'۲۰:۱۰–۲۰:۲۵',title:'شام',parallel:'کارهای موبایل هم‌زمان',desc:'',icon:'🍲',duration:'۱۵ دقیقه',start:'20:10',end:'20:25',minutes:15,priority:'core'},
@@ -449,16 +438,13 @@ function iconSvg(icon){const custom=loadCustomIconsSafe().find(x=>x.id===icon);i
 function loadCustomIconsSafe(){try{return JSON.parse(localStorage.getItem('routine-custom-icons-v1')||'[]')}catch(e){return []}}
 function iconColor(icon){return iconLibrary.find(x=>x.id===icon)?.color||'#b9c8d8'}
 function iconName(icon){return iconLibrary.find(x=>x.id===icon)?.label||'آیکون دلخواه'}
-const groupNames={morning:'صبح',noon:'ظهر',evening:'عصر',night:'شب'};
-const LEGACY_GROUP_FALLBACK={work:'noon',breaks:'noon',returning:'evening'};
+const groupNames={morning:'قبل از ظهر',afternoon:'عصر و شب'};
+const LEGACY_GROUP_FALLBACK={noon:'afternoon',evening:'afternoon',night:'afternoon',work:'afternoon',breaks:'afternoon',returning:'afternoon'};
 function dayPartForTime(start){
  const match=/^(?:[01]\d|2[0-3]):[0-5]\d$/.exec(String(start||''));
  if(!match)return null;
  const [h,m]=start.split(':').map(Number),minutes=h*60+m;
- if(minutes>=360&&minutes<720)return 'morning';
- if(minutes>=720&&minutes<960)return 'noon';
- if(minutes>=960&&minutes<1200)return 'evening';
- return 'night';
+ return minutes>=360&&minutes<720?'morning':'afternoon';
 }
 const dailyMessages=['پیشرفت واقعی از کارهای کوچک و پیوسته ساخته می‌شود.','لازم نیست سریع‌ترین باشی؛ فقط پیوستگی را حفظ کن.','امروز را با قدم بعدی بساز، نه با نگرانی درباره کل مسیر.','تمرکز روی کار مهم، بهتر از شلوغ‌کردن فهرست کارهاست.','استراحت بخشی از مسیر پیشرفت است، نه نقطه مقابل آن.'];
 const clone=x=>JSON.parse(JSON.stringify(x));
@@ -466,6 +452,7 @@ function freshSchedule(){return normalizeSchedule(clone(baseGroups))}
 function normalizeSchedule(x){
  const out={};for(const g of Object.keys(groupNames))out[g]=[];
  if(!x||typeof x!=='object')return out;
+ if(Object.keys(x).some(g=>['noon','evening','night','work','breaks','returning'].includes(g))||!Array.isArray(x.afternoon))scheduleNeedsMigration=true;
  for(const [sourceGroup,tasks] of Object.entries(x)){
    if(!Array.isArray(tasks))continue;
    for(const original of tasks){
@@ -479,7 +466,7 @@ function normalizeSchedule(x){
  for(const part of Object.keys(groupNames))out[part]=sortTaskListByStart(out[part],part);
  return out;
 }
-function hasScheduleShape(x){return !!x&&typeof x==='object'&&['morning','noon','evening','night','work','breaks','returning'].some(g=>Array.isArray(x[g]))}
+function hasScheduleShape(x){return !!x&&typeof x==='object'&&['morning','afternoon','noon','evening','night','work','breaks','returning'].some(g=>Array.isArray(x[g]))}
 function backupRaw(key,value){try{const stamp=new Date().toISOString().replace(/[:.]/g,'-');localStorage.setItem(BACKUP_PREFIX+stamp,JSON.stringify({source:key,savedAt:new Date().toISOString(),value:JSON.parse(value)}));}catch(e){}}
 function loadSchedules(){
  const candidates=[STORAGE_SCHEDULE,...LEGACY_KEYS];
@@ -535,7 +522,7 @@ function sortTaskListByStart(tasks,part=''){
   return tasks.map((task,index)=>{
     const valid=/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(task.start||'');
     let minutes=valid?Number(task.start.slice(0,2))*60+Number(task.start.slice(3,5)):Infinity;
-    if(valid&&part==='night'&&minutes<360)minutes+=1440;
+    if(valid&&part==='afternoon'&&minutes<360)minutes+=1440;
     return {task,index,minutes};
   }).sort((a,b)=>a.minutes-b.minutes||a.index-b.index).map(item=>item.task);
 }
@@ -552,11 +539,12 @@ function saveBusyPlans(){try{localStorage.setItem('routine-busy-plans-v1',JSON.s
 function fa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])}
 function fmtDuration(n){if(n%60===0)return fa(n/60)+' ساعت';if(n>60)return fa(Math.floor(n/60))+' ساعت و '+fa(n%60)+' دقیقه';return fa(n)+' دقیقه'}
 function addMinutes(time,mins){if(!time)return '';let [h,m]=time.split(':').map(Number),v=(h*60+m+mins)%1440;return String(Math.floor(v/60)).padStart(2,'0')+':'+String(v%60).padStart(2,'0')}
-function timeLabel(t){return t.start&&Number.isFinite(Number(t.minutes))?fa(t.start)+'–'+fa(addMinutes(t.start,t.minutes)):t.time||''}
+function timeLabel(t){if(t.start){const end=t.end||((Number(t.minutes)>0)?addMinutes(t.start,Number(t.minutes)):'');if(end)return fa(t.start)+'–'+fa(end)}return t.time||''}
+function durationLabel(t){if(Number(t.minutes)>0)return fmtDuration(Number(t.minutes));return t.duration||''}
 function colorFor(icon){return iconColor(icon)}
-function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${fmtDuration(t.minutes||0)}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button><button type="button" class="drag-handle" aria-label="نگه دار و برای جابه‌جایی بکش" title="برای جابه‌جایی نگه دار و بکش"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h.01M11 3h.01M5 8h.01M11 8h.01M5 13h.01M11 13h.01" stroke-width="3"/></svg></button></span></div>`}
+function taskHTML(t){const checked=checks[t.id]?'checked':'';return `<div class="task ${t.kind==='parallel'?'parallel':'main'}" data-task="${t.id}" ${t.start?`data-start="${t.start}" data-end="${addMinutes(t.start,t.minutes||0)}"`:''}><span class="task-icon" aria-hidden="true" style="--icon-color:${colorFor(t.icon)}">${iconSvg(t.icon)}</span><span class="task-main"><span class="task-title">${escapeHTML(t.title||'')}</span>${t.parallel?`<span class="task-parallel">${escapeHTML(t.parallel)}</span>`:''}${t.desc?`<span class="task-desc">${escapeHTML(t.desc)}</span>`:''}</span><span class="task-meta"><span class="task-time">${timeLabel(t)}</span><span class="task-duration">${escapeHTML(durationLabel(t))}</span></span><input class="check" type="checkbox" aria-label="انجام شد" data-id="${t.id}" ${checked}><span class="task-actions"><button type="button" class="edit-task-btn" data-edit="${t.id}">ویرایش</button><button type="button" class="drag-handle" aria-label="نگه دار و برای جابه‌جایی بکش" title="برای جابه‌جایی نگه دار و بکش"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h.01M11 3h.01M5 8h.01M11 8h.01M5 13h.01M11 13h.01" stroke-width="3"/></svg></button></span></div>`}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-const targetIds={morning:'morningTasks',noon:'noonTasks',evening:'eveningTasks',night:'nightTasks'};
+const targetIds={morning:'morningTasks',afternoon:'afternoonTasks'};
 function renderDays(){const el=document.getElementById('daySelector');el.innerHTML='';DAYS.forEach(([name])=>{const b=document.createElement('button');b.type='button';b.className='profile-btn'+(name===activeDay?' active':'');b.textContent=name;b.addEventListener('click',()=>switchDay(name));el.appendChild(b)})}
 function renderTasks(){groups=schedules[activeDay];allTasks=Object.values(groups).flat();for(const key of Object.keys(groupNames)){const el=document.getElementById(targetIds[key]),arr=groups[key]||[];el.innerHTML=arr.map(taskHTML).join('')+(arr.length?'':'<div class="empty-group">هنوز فعالیتی در این بخش ثبت نشده است.</div>')+`<button type="button" class="add-task-btn" data-add="${key}">＋ افزودن فعالیت به ${groupNames[key]}</button>`}
 document.querySelectorAll('.check').forEach(i=>i.addEventListener('change',e=>{checks[e.target.dataset.id]=e.target.checked;saveChecks()}));document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEditor(findTask(b.dataset.edit))));document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>openEditor(null,b.dataset.add)));document.body.classList.remove('priority-mode');updateProgress();markCurrentTask(new Date())}
@@ -627,10 +615,7 @@ document.getElementById('resetBtn').addEventListener('click',()=>{if(!confirm('�
 document.querySelectorAll('.filters a').forEach(a=>a.addEventListener('click',()=>document.querySelectorAll('.filters a').forEach(x=>x.classList.toggle('active',x===a))));
 let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});document.getElementById('installBtn').addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else if(window.matchMedia('(display-mode: standalone)').matches)showToast('برنامه روی صفحه اصلی نصب شده است.');else showToast('برای نصب وب‌اپ، نسخه باید روی HTTPS باشد.')});
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
-renderDays();renderTasks();if(!localStorage.getItem(STORAGE_SCHEDULE)&&!storageBlocked)saveSchedules();if(storageBlocked)showToast('دادهٔ ذخیره‌شده با ساختار ناشناخته پیدا شد؛ تا بررسی، ذخیره‌سازی متوقف است.');updateDailyMessage();updateClock();setInterval(updateClock,30000);
+renderDays();renderTasks();if(scheduleNeedsMigration&&!storageBlocked)saveSchedules();else if(!localStorage.getItem(STORAGE_SCHEDULE)&&!storageBlocked)saveSchedules();if(storageBlocked)showToast('دادهٔ ذخیره‌شده با ساختار ناشناخته پیدا شد؛ تا بررسی، ذخیره‌سازی متوقف است.');updateDailyMessage();updateClock();setInterval(updateClock,30000);
 </script>
 </body>
 </html>
-
-
-
